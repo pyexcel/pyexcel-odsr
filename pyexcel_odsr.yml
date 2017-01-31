@@ -1,0 +1,10 @@
+overrides: "pyexcel.yaml"
+name: "pyexcel-odsr"
+nick_name: ods
+version: 0.3.0
+release: 0.3.0
+file_type: ods
+dependencies:
+  - pyexcel-io>=0.3.0
+  - messytables>=1.3.3
+description: a plugin to pyexcel and provides the capbility to read data in ods formats using tailored messytables.

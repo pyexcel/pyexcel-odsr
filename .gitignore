@@ -1,3 +1,5 @@
+# April 2016
+# reference: https://github.com/github/gitignore/blob/master/Python.gitignore
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -87,3 +89,8 @@ ENV/
 
 # Rope project settings
 .ropeproject
+*~
+commons/
+doc/build/
+cover/
+coverage/
