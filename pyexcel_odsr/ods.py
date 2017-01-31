@@ -1,13 +1,11 @@
 import sys
 import math
-import datetime
 
-from messytables.ods import ODSTableSet
-
-from pyexcel_io.book import BookReader
-from pyexcel_io.sheet import SheetReader
+from messyods import ODSTableSet
 
 import pyexcel_odsr.converter as converter
+from pyexcel_io.book import BookReader
+from pyexcel_io.sheet import SheetReader
 
 PY2 = sys.version_info[0] == 2
 
@@ -16,6 +14,7 @@ if PY27_BELOW:
     from ordereddict import OrderedDict
 else:
     from collections import OrderedDict
+
 
 
 class ODSSheet(SheetReader):
@@ -41,18 +40,15 @@ class ODSSheet(SheetReader):
             yield self.__convert_cell(cell)
 
     def __convert_cell(self, cell):
-        csv_cell_text = cell.value
-        if csv_cell_text is None:
-            return None
         ret = None
-        if self.__auto_detect_int:
-            ret = _detect_int_value(csv_cell_text)
-        if ret is None and self.__auto_detect_float:
-            ret = _detect_float_value(csv_cell_text)
-        if ret is None and self.__auto_detect_datetime:
-            ret = _detect_date_value(csv_cell_text)
-        if ret is None:
-            ret = csv_cell_text
+        if cell[1] in converter.VALUE_CONVERTERS:
+            n_value = converter.VALUE_CONVERTERS[cell[1]](cell[0])
+            if cell[1] == 'float' and self.__auto_detect_int:
+                if is_integer_ok_for_xl_float(n_value):
+                    n_value = int(n_value)
+            ret = n_value
+        else:
+            ret = cell[0]
         return ret
 
 
@@ -108,54 +104,6 @@ class ODSBook(BookReader):
 
     def _load_from_file(self):
         self._native_book = ODSTableSet(self._file_name)
-
-
-def _detect_date_value(csv_cell_text):
-    """
-    Read the date formats that were written by csv.writer
-    """
-    ret = None
-    try:
-        if len(csv_cell_text) == 8:
-            if "." in csv_cell_text:
-                ret = datetime.datetime.strptime(
-                    csv_cell_text,
-                    "%d.%m.%y")
-                ret = ret.date()
-            elif ":" in csv_cell_text:
-                ret = datetime.datetime.strptime(
-                    csv_cell_text[0:26],
-                    "%H:%M:%S")
-        elif len(csv_cell_text) == 10:
-            ret = datetime.datetime.strptime(
-                csv_cell_text,
-                "%Y-%m-%d")
-            ret = ret.date()
-        elif len(csv_cell_text) == 19:
-            ret = datetime.datetime.strptime(
-                csv_cell_text,
-                "%Y-%m-%d %H:%M:%S")
-        elif len(csv_cell_text) > 19:
-            ret = datetime.datetime.strptime(
-                csv_cell_text[0:26],
-                "%Y-%m-%d %H:%M:%S.%f")
-    except ValueError:
-        pass
-    return ret
-
-
-def _detect_float_value(csv_cell_text):
-    try:
-        return float(csv_cell_text)
-    except ValueError:
-        return None
-
-
-def _detect_int_value(csv_cell_text):
-    try:
-        return int(csv_cell_text)
-    except ValueError:
-        return None
 
 
 def is_integer_ok_for_xl_float(value):

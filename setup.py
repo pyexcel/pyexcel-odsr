@@ -34,7 +34,7 @@ CLASSIFIERS = [
 
 INSTALL_REQUIRES = [
     'pyexcel-io>=0.3.0',
-    'messytables>=1.3.3',
+    'messytables>=0.15.1',
 ]
 
 

@@ -67,17 +67,17 @@ class ODSCellTypes:
         eq_(self.data["Sheet1"][0][0], "Date")
         eq_(self.data["Sheet1"][1][0].strftime(date_format), "11/11/2014")
         eq_(self.data["Sheet1"][2][0].strftime(date_format), "01/01/2001")
-        eq_(self.data["Sheet1"][3][0], 0) # difference ''
+        eq_(self.data["Sheet1"][3][0], '')
         # time formats
         time_format = "%S:%M:%H"
         eq_(self.data["Sheet1"][0][1], "Time")
         eq_(self.data["Sheet1"][1][1].strftime(time_format), "12:12:11")
         eq_(self.data["Sheet1"][2][1].strftime(time_format), "12:00:00")
-        #eq_(self.data["Sheet1"][3][1], 0)
-        #eq_(self.data["Sheet1"][4][1], datetime.timedelta(hours=27,
-        #                                                       minutes=17,
-        #                                                       seconds=54))
-        #eq_(self.data["Sheet1"][5][1], "Other")
+        eq_(self.data["Sheet1"][3][1], 0)
+        eq_(self.data["Sheet1"][4][1], datetime.timedelta(hours=27,
+                                                               minutes=17,
+                                                               seconds=54))
+        eq_(self.data["Sheet1"][5][1], "Other")
         # boolean
         eq_(self.data["Sheet1"][0][2], "Boolean")
         eq_(self.data["Sheet1"][1][2], True)
