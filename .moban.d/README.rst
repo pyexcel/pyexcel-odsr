@@ -1,7 +1,8 @@
 {%extends 'README.rst.jj2' %}
 
 {%block description%}
-**pyexcel-odsr** is a dedicated ods reader using tailored ods reader from messytables.
+**pyexcel-odsr** is a specialized ods reader based on tailored ods reader from
+`messytables <https://github.com/okfn/messytables>`_.
 You are likely to use it with `pyexcel <https://github.com/pyexcel/pyexcel>`_.
 Differring from `pyexcel-ods <https://github.com/pyexcel/pyexcel-ods>`_ and
 `pyexcel-ods3 <https://github.com/pyexcel/pyexcel-ods3>`_ in handling ods file, this
