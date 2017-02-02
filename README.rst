@@ -120,6 +120,8 @@ Continue from previous example:
 Pagination feature
 ********************************************************************************
 
+
+
 Let's assume the following file is a huge ods file:
 
 .. code-block:: python

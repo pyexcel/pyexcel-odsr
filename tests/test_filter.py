@@ -15,7 +15,7 @@ class TestFilter:
             [5, 25, 35],
             [6, 26, 36]
         ]
-        save_data(self.test_file, sample, library='pyexcel-ods')
+        save_data(self.test_file, sample)
         self.sheet_name = "pyexcel_sheet1"
 
     def test_filter_row(self):

@@ -1,3 +1,4 @@
+import os # noqa
 import pyexcel
 import datetime
 from nose.tools import raises, eq_
@@ -9,52 +10,7 @@ def create_sample_file1(file):
     table.append(data[:4])
     table.append(data[4:8])
     table.append(data[8:12])
-    pyexcel.save_as(array=table, dest_file_name=file,
-                    dest_library='pyexcel-ods')
-
-
-class PyexcelHatWriterBase:
-    """
-    Abstract functional test for hat writers
-    """
-    content = {
-        "X": [1, 2, 3, 4, 5],
-        "Y": [6, 7, 8, 9, 10],
-        "Z": [11, 12, 13, 14, 15]
-    }
-
-    def test_series_table(self):
-        pyexcel.save_as(adict=self.content, dest_file_name=self.testfile)
-        r = pyexcel.get_sheet(file_name=self.testfile,
-                              name_columns_by_row=0,
-                              library='pyexcel-odsr')
-        eq_(r.dict, self.content)
-
-
-class PyexcelWriterBase:
-    """
-    Abstract functional test for writers
-
-    testfile and testfile2 have to be initialized before
-    it is used for testing
-    """
-    content = [
-        [1, 2, 3, 4, 5],
-        [1, 2, 3, 4, 5],
-        [1, 2, 3, 4, 5],
-        [1, 2, 3, 4, 5]
-    ]
-
-    def _create_a_file(self, file):
-        pyexcel.save_as(dest_file_name=file,
-                        array=self.content,
-                        dest_library='pyexcel-ods')
-
-    def test_write_array(self):
-        self._create_a_file(self.testfile)
-        r = pyexcel.get_sheet(file_name=self.testfile, library='pyexcel-odsr')
-        actual = list(r.rows())
-        assert actual == self.content
+    pyexcel.save_as(array=table, dest_file_name=file)
 
 
 class ODSCellTypes:
@@ -65,7 +21,7 @@ class ODSCellTypes:
         eq_(self.data["Sheet1"][0][0], "Date")
         eq_(self.data["Sheet1"][1][0].strftime(date_format), "11/11/2014")
         eq_(self.data["Sheet1"][2][0].strftime(date_format), "01/01/2001")
-        eq_(self.data["Sheet1"][3][0], '')
+        eq_(self.data["Sheet1"][3][0], "")
         # time formats
         time_format = "%S:%M:%H"
         eq_(self.data["Sheet1"][0][1], "Time")
@@ -85,8 +41,8 @@ class ODSCellTypes:
         eq_(self.data["Sheet1"][1][3], 11.11)
         # Currency
         eq_(self.data["Sheet1"][0][4], "Currency")
-        eq_(self.data["Sheet1"][1][4], "1 GBP")
-        eq_(self.data["Sheet1"][2][4], "-10000 GBP")
+        eq_(self.data["Sheet1"][1][4], '1 GBP')
+        eq_(self.data["Sheet1"][2][4], '-10000 GBP')
         # Percentage
         eq_(self.data["Sheet1"][0][5], "Percentage")
         eq_(self.data["Sheet1"][1][5], 2)
