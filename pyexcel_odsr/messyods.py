@@ -26,10 +26,21 @@ import zipfile
 from lxml import etree
 from pyexcel_odsr.converter import VALUE_TOKEN
 
-ODS_NAMESPACES_TAG_MATCH = re.compile(b"(<office:document-content[^>]*>)", re.MULTILINE)
-ODS_TABLE_MATCH = re.compile(b".*?(<table:table.*?<\/.*?:table>).*?", re.MULTILINE)
-ODS_TABLE_NAME = re.compile(b'.*?table:name=\"(.*?)\".*?')
-ODS_ROW_MATCH = re.compile(b".*?(<table:table-row.*?<\/.*?:table-row>).*?", re.MULTILINE)
+ODS_NAMESPACES_TAG_MATCH = re.compile(b"(<office:document-content[^>]*>)",
+                                      re.MULTILINE)
+ODS_TABLE_MATCH = re.compile(b".*?(<table:table.*?<\/.*?:table>).*?",
+                             re.MULTILINE)
+ODS_TABLE_NAME = re.compile(b".*?table:name=\"(.*?)\".*?")
+ODS_ROW_MATCH = re.compile(b".*?(<table:table-row.*?<\/.*?:table-row>).*?",
+                           re.MULTILINE)
+NS_OPENDOCUMENT_PTTN = u"urn:oasis:names:tc:opendocument:xmlns:%s"
+NS_CAL_PTTN = u"urn:org:documentfoundation:names:experimental:calc:xmlns:%s"
+NS_OPENDOCUMENT_TABLE = NS_OPENDOCUMENT_PTTN % "table:1.0"
+NS_OPENDOCUMENT_OFFICE = NS_OPENDOCUMENT_PTTN % "office:1.0"
+
+TABLE_CELL = 'table-cell'
+VALUE_TYPE = 'value-type'
+COLUMN_REPEAT = 'number-columns-repeated'
 
 
 class ODSTableSet(object):
@@ -114,13 +125,13 @@ class ODSRowSet(object):
         else:
             namespaces = {
                 "dc": u"http://purl.org/dc/elements/1.1/",
-                "draw": u"urn:oasis:names:tc:opendocument:xmlns:drawing:1.0",
-                "number": u"urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0",
-                "office": u"urn:oasis:names:tc:opendocument:xmlns:office:1.0",
-                "svg": u"urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0",
-                "table": u"urn:oasis:names:tc:opendocument:xmlns:table:1.0",
-                "text": u"urn:oasis:names:tc:opendocument:xmlns:text:1.0",
-                "calcext": u"urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0",
+                "draw": NS_OPENDOCUMENT_PTTN % u"drawing:1.0",
+                "number": NS_OPENDOCUMENT_PTTN % u"datastyle:1.0",
+                "office": NS_OPENDOCUMENT_PTTN % u"office:1.0",
+                "svg": NS_OPENDOCUMENT_PTTN % u"svg-compatible:1.0",
+                "table": NS_OPENDOCUMENT_PTTN % u"table:1.0",
+                "text": NS_OPENDOCUMENT_PTTN % u"text:1.0",
+                "calcext": NS_CAL_PTTN % u"calcext:1.0",
             }
 
             ods_header = u"<wrapper {0}>"\
@@ -128,7 +139,6 @@ class ODSRowSet(object):
                         for k, v in namespaces.iteritems())).encode('utf-8')
             ods_footer = u"</wrapper>".encode('utf-8')
             self.namespace_tags = (ods_header, ods_footer)
-
 
     def raw(self, sample=False):
         """ Iterate over all rows in this sheet. """
@@ -140,41 +150,56 @@ class ODSRowSet(object):
             block = self.namespace_tags[0] + row + self.namespace_tags[1]
             partial = io.BytesIO(block)
 
-            for action, elem in etree.iterparse(partial, ('end',)):
-                if elem.tag == '{urn:oasis:names:tc:opendocument:xmlns:table:1.0}table-cell':
-                    cell_type = elem.attrib.get('{urn:oasis:names:tc:opendocument:xmlns:office:1.0}value-type')
-                    value_token = VALUE_TOKEN.get(cell_type, 'value')
-                    repeat = elem.attrib.get('{urn:oasis:names:tc:opendocument:xmlns:table:1.0}number-columns-repeated')
-                    if cell_type == 'string':
-                        children = elem.getchildren()
-                        text_content = []
-                        for child in children:
-                            if child.text:
-                                text_content.append(child.text)
-                            else:
-                                text_content.append('')
-                        if len(text_content) > 0:
-                            c = ('\n'.join(text_content), cell_type)
+            for action, element in etree.iterparse(partial, ('end',)):
+                if element.tag != _tag(NS_OPENDOCUMENT_TABLE, TABLE_CELL):
+                    continue
 
-                        else:
-                            c = ('', cell_type)
-                
-                    elif cell_type != None:
-                            
-                        value = elem.attrib.get('{urn:oasis:names:tc:opendocument:xmlns:office:1.0}'+value_token)
-                        c=(value, cell_type)
-                    else:
-                        c=('', 'string')
-                    if repeat:
-                        number_of_repeat = int(repeat)
-                        row_data += [c] * number_of_repeat
-                    else:        
-                        row_data.append(c)
+                cell = _read_cell(element)
+                repeat = element.attrib.get(
+                    _tag(NS_OPENDOCUMENT_TABLE, COLUMN_REPEAT))
 
-            if not row_data:
-                # ignore blank lines
-                continue
+                if repeat:
+                    number_of_repeat = int(repeat)
+                    row_data += [cell] * number_of_repeat
+                else:
+                    row_data.append(cell)
 
             del partial
             yield row_data
         del rows
+
+
+def _read_cell(element):
+    cell_type = element.attrib.get(_tag(NS_OPENDOCUMENT_OFFICE, VALUE_TYPE))
+    value_token = VALUE_TOKEN.get(cell_type, 'value')
+    if cell_type == 'string':
+        cell = _read_text_cell(element)
+    elif cell_type == 'currency':
+        value = element.attrib.get(_tag(NS_OPENDOCUMENT_OFFICE, value_token))
+        currency = element.attrib.get(_tag(NS_OPENDOCUMENT_OFFICE, 'currency'))
+        cell = (value + ' ' + currency, 'currency')
+    elif cell_type is not None:
+        value = element.attrib.get(_tag(NS_OPENDOCUMENT_OFFICE, value_token))
+        cell = (value, cell_type)
+    else:
+        cell = ('', 'string')
+    return cell
+
+
+def _read_text_cell(element):
+    children = element.getchildren()
+    text_content = []
+    for child in children:
+        if child.text:
+            text_content.append(child.text)
+        else:
+            text_content.append('')
+    if len(text_content) > 0:
+        cell_value = '\n'.join(text_content)
+    else:
+        cell_value = ''
+    return (cell_value, 'string')
+
+
+def _tag(namespace, tag):
+    return '{%s}%s' % (namespace, tag)

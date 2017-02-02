@@ -1,4 +1,3 @@
-import os
 import pyexcel
 import datetime
 from nose.tools import raises, eq_
@@ -75,8 +74,8 @@ class ODSCellTypes:
         eq_(self.data["Sheet1"][2][1].strftime(time_format), "12:00:00")
         eq_(self.data["Sheet1"][3][1], 0)
         eq_(self.data["Sheet1"][4][1], datetime.timedelta(hours=27,
-                                                               minutes=17,
-                                                               seconds=54))
+                                                          minutes=17,
+                                                          seconds=54))
         eq_(self.data["Sheet1"][5][1], "Other")
         # boolean
         eq_(self.data["Sheet1"][0][2], "Boolean")
@@ -87,8 +86,8 @@ class ODSCellTypes:
         eq_(self.data["Sheet1"][1][3], 11.11)
         # Currency
         eq_(self.data["Sheet1"][0][4], "Currency")
-        eq_(self.data["Sheet1"][1][4], 1)
-        eq_(self.data["Sheet1"][2][4], -10000)
+        eq_(self.data["Sheet1"][1][4], "1 GBP")
+        eq_(self.data["Sheet1"][2][4], "-10000 GBP")
         # Percentage
         eq_(self.data["Sheet1"][0][5], "Percentage")
         eq_(self.data["Sheet1"][1][5], 2)

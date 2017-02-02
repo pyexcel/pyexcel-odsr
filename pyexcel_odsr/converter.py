@@ -110,8 +110,7 @@ VALUE_CONVERTERS = {
     "time": time_value,
     "timedelta": time_value,
     "boolean": boolean_value,
-    "percentage": float_value,
-    "currency": float_value
+    "percentage": float_value
 }
 
 ODS_VALUE_CONVERTERS = {

@@ -16,7 +16,6 @@ else:
     from collections import OrderedDict
 
 
-
 class ODSSheet(SheetReader):
     """native ods sheet"""
     def __init__(self, sheet, auto_detect_int=True,

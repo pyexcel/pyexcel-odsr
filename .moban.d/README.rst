@@ -1,16 +1,53 @@
 {%extends 'README.rst.jj2' %}
 
 {%block description%}
-**pyexcel-ods** is a tiny wrapper library to read, manipulate and write data in
-ods format using python 2.6 and python 2.7. You are likely to use it with
-`pyexcel <https://github.com/pyexcel/pyexcel>`_.
-`pyexcel-ods3 <https://github.com/pyexcel/pyexcel-ods3>`_ is a sister library that
-does the same thing but supports Python 3.3 and 3.4 and depends on lxml.
+**pyexcel-odsr** is a dedicated ods reader using tailored ods reader from messytables.
+You are likely to use it with `pyexcel <https://github.com/pyexcel/pyexcel>`_.
+`pyexcel-ods <https://github.com/pyexcel/pyexcel-ods>`_ and
+`pyexcel-ods3 <https://github.com/pyexcel/pyexcel-ods3>`_ are simliar libraries.
 {%endblock%}
+
+{% block write_to_file %}
+
+.. testcode::
+   :hide:
+
+    >>> from pyexcel_ods import save_data
+    >>> data = OrderedDict() # from collections import OrderedDict
+    >>> data.update({"Sheet 1": [[1, 2, 3], [4, 5, 6]]})
+    >>> data.update({"Sheet 2": [["row 1", "row 2", "row 3"]]})
+    >>> save_data("your_file.{{file_type}}", data)
+
+{% endblock %}
+
+
+{% block write_to_memory %}
+
+.. testcode::
+   :hide:
+
+    >>> data = OrderedDict()
+    >>> data.update({"Sheet 1": [[1, 2, 3], [4, 5, 6]]})
+    >>> data.update({"Sheet 2": [[7, 8, 9], [10, 11, 12]]})
+    >>> io = StringIO()
+    >>> save_data(io, data)
+    >>> # do something with the io
+    >>> # In reality, you might give it to your http response
+    >>> # object for downloading
+
+
+{%endblock%}
+
+{% block pyexcel_write_to_file%}
+{% endblock %}
+
+{% block pyexcel_write_to_memory%}
+{% endblock %}
 
 {%block extras %}
 Credits
 ================================================================================
 
-ODSReader is originally written by `Marco Conti <https://github.com/marcoconti83/read-ods-with-odfpy>`_
+This library is based on the ods of messytables, Open Knowledge International.
+
 {%endblock%}

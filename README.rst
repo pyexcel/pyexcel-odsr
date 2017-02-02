@@ -8,11 +8,10 @@ pyexcel-odsr - Let you focus on data, instead of ods format
 .. image:: https://codecov.io/github/pyexcel/pyexcel-odsr/coverage.png
     :target: https://codecov.io/github/pyexcel/pyexcel-odsr
 
-**pyexcel-ods** is a tiny wrapper library to read, manipulate and write data in
-ods format using python 2.6 and python 2.7. You are likely to use it with
-`pyexcel <https://github.com/pyexcel/pyexcel>`_.
-`pyexcel-ods3 <https://github.com/pyexcel/pyexcel-ods3>`_ is a sister library that
-does the same thing but supports Python 3.3 and 3.4 and depends on lxml.
+**pyexcel-odsr** is a dedicated ods reader using tailored ods reader from messytables.
+You are likely to use it with `pyexcel <https://github.com/pyexcel/pyexcel>`_.
+`pyexcel-ods <https://github.com/pyexcel/pyexcel-ods>`_ and
+`pyexcel-ods3 <https://github.com/pyexcel/pyexcel-ods3>`_ are simliar libraries.
 
 Known constraints
 ==================
@@ -43,9 +42,6 @@ Usage
 As a standalone library
 --------------------------------------------------------------------------------
 
-Write to an ods file
-********************************************************************************
-
 .. testcode::
    :hide:
 
@@ -62,15 +58,15 @@ Write to an ods file
     ...     from collections import OrderedDict
 
 
-Here's the sample code to write a dictionary to an ods file:
-
-.. code-block:: python
+.. testcode::
+   :hide:
 
     >>> from pyexcel_ods import save_data
     >>> data = OrderedDict() # from collections import OrderedDict
     >>> data.update({"Sheet 1": [[1, 2, 3], [4, 5, 6]]})
     >>> data.update({"Sheet 2": [["row 1", "row 2", "row 3"]]})
     >>> save_data("your_file.ods", data)
+
 
 Read from an ods file
 ********************************************************************************
@@ -86,14 +82,10 @@ Here's the sample code:
     {"Sheet 1": [[1, 2, 3], [4, 5, 6]], "Sheet 2": [["row 1", "row 2", "row 3"]]}
 
 
-Write an ods to memory
-********************************************************************************
 
-Here's the sample code to write a dictionary to an ods file:
+.. testcode::
+   :hide:
 
-.. code-block:: python
-
-    >>> from pyexcel_ods import save_data
     >>> data = OrderedDict()
     >>> data.update({"Sheet 1": [[1, 2, 3], [4, 5, 6]]})
     >>> data.update({"Sheet 2": [[7, 8, 9], [10, 11, 12]]})
@@ -102,6 +94,7 @@ Here's the sample code to write a dictionary to an ods file:
     >>> # do something with the io
     >>> # In reality, you might give it to your http response
     >>> # object for downloading
+
 
 
 
@@ -122,11 +115,6 @@ Continue from previous example:
 
 Pagination feature
 ********************************************************************************
-
-Special notice 30/01/2017: due to the constraints of the underlying 3rd party
-library, it will read the whole file before returning the paginated data. So
-at the end of day, the only benefit is less data returned from the reading
-function. No major performance improvement will be seen.
 
 Let's assume the following file is a huge ods file:
 
@@ -336,7 +324,8 @@ On Windows systems, please issue this command::
 Credits
 ================================================================================
 
-ODSReader is originally written by `Marco Conti <https://github.com/marcoconti83/read-ods-with-odfpy>`_
+This library is based on the ods of messytables, Open Knowledge International.
+
 
 .. testcode::
    :hide:
