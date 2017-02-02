@@ -62,7 +62,6 @@ class ODSCellTypes:
     def test_formats(self):
         # date formats
         date_format = "%d/%m/%Y"
-        print self.data
         eq_(self.data["Sheet1"][0][0], "Date")
         eq_(self.data["Sheet1"][1][0].strftime(date_format), "11/11/2014")
         eq_(self.data["Sheet1"][2][0].strftime(date_format), "01/01/2001")
