@@ -75,7 +75,7 @@ Here's the sample code:
 
 .. code-block:: python
 
-    >>> from pyexcel_ods import get_data
+    >>> from pyexcel_odsr import get_data
     >>> data = get_data("your_file.ods")
     >>> import json
     >>> print(json.dumps(data))
@@ -172,16 +172,6 @@ No longer, explicit import is needed since pyexcel version 0.2.2. Instead,
 this library is auto-loaded. So if you want to read data in ods format,
 installing it is enough.
 
-Any version under pyexcel 0.2.2, you have to keep doing the following:
-
-Import it in your file to enable this plugin:
-
-.. code-block:: python
-
-    from pyexcel.ext import ods
-
-Please note only pyexcel version 0.0.4+ support this.
-
 
 Reading from an ods file
 ********************************************************************************
@@ -191,7 +181,6 @@ Here is the sample code:
 .. code-block:: python
 
     >>> import pyexcel as pe
-    >>> # from pyexcel.ext import ods
     >>> sheet = pe.get_book(file_name="your_file.ods")
     >>> sheet
     Sheet 1:
@@ -206,14 +195,12 @@ Here is the sample code:
     +-------+-------+-------+
 
 
-Writing to an ods file
-********************************************************************************
 
-Here is the sample code:
-
-.. code-block:: python
+.. testcode::
+   :hide:
 
     >>> sheet.save_as("another_file.ods")
+
 
 
 Reading from a IO instance
@@ -244,23 +231,7 @@ You got to wrap the binary content with stream to get ods working:
     +-------+-------+-------+
 
 
-Writing to a StringIO instance
-********************************************************************************
 
-You need to pass a StringIO instance to Writer:
-
-.. code-block:: python
-
-    >>> data = [
-    ...     [1, 2, 3],
-    ...     [4, 5, 6]
-    ... ]
-    >>> io = StringIO()
-    >>> sheet = pe.Sheet(data)
-    >>> io = sheet.save_to_memory("ods", io)
-    >>> # then do something with io
-    >>> # In reality, you might give it to your http response
-    >>> # object for downloading
 
 License
 ================================================================================

@@ -39,6 +39,12 @@ You are likely to use it with `pyexcel <https://github.com/pyexcel/pyexcel>`_.
 {%endblock%}
 
 {% block pyexcel_write_to_file%}
+
+.. testcode::
+   :hide:
+
+    >>> sheet.save_as("another_file.{{file_type}}")
+
 {% endblock %}
 
 {% block pyexcel_write_to_memory%}

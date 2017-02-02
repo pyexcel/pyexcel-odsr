@@ -1,6 +1,6 @@
 overrides: "pyexcel.yaml"
 name: "pyexcel-odsr"
-nick_name: ods
+nick_name: odsr
 version: 0.3.0
 release: 0.3.0
 file_type: ods
