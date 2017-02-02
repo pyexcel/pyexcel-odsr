@@ -35,10 +35,6 @@ def date_value(value):
     return ret
 
 
-def ods_date_value(value):
-    return value.strftime("%Y-%m-%d")
-
-
 def time_value(value):
     """convert to time value accroding the specification"""
     hour = int(value[2:4])
@@ -51,10 +47,6 @@ def time_value(value):
     return ret
 
 
-def ods_time_value(value):
-    return value.strftime("PT%HH%MM%SS")
-
-
 def boolean_value(value):
     """get bolean value"""
     if value == "true":
@@ -62,22 +54,6 @@ def boolean_value(value):
     else:
         ret = False
     return ret
-
-
-def ods_bool_value(value):
-    """convert a boolean value to text"""
-    if value is True:
-        return "true"
-    else:
-        return "false"
-
-
-def ods_timedelta_value(cell):
-    """convert a cell value to time delta"""
-    hours = cell.days * 24 + cell.seconds // 3600
-    minutes = (cell.seconds // 60) % 60
-    seconds = cell.seconds % 60
-    return "PT%02dH%02dM%02dS" % (hours, minutes, seconds)
 
 
 ODS_FORMAT_CONVERSION = {
@@ -111,13 +87,6 @@ VALUE_CONVERTERS = {
     "timedelta": time_value,
     "boolean": boolean_value,
     "percentage": float_value
-}
-
-ODS_VALUE_CONVERTERS = {
-    "date": ods_date_value,
-    "time": ods_time_value,
-    "boolean": ods_bool_value,
-    "timedelta": ods_timedelta_value
 }
 
 

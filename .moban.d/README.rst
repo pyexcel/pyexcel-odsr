@@ -3,8 +3,10 @@
 {%block description%}
 **pyexcel-odsr** is a dedicated ods reader using tailored ods reader from messytables.
 You are likely to use it with `pyexcel <https://github.com/pyexcel/pyexcel>`_.
-`pyexcel-ods <https://github.com/pyexcel/pyexcel-ods>`_ and
-`pyexcel-ods3 <https://github.com/pyexcel/pyexcel-ods3>`_ are simliar libraries.
+Differring from `pyexcel-ods <https://github.com/pyexcel/pyexcel-ods>`_ and
+`pyexcel-ods3 <https://github.com/pyexcel/pyexcel-ods3>`_ in handling ods file, this
+library could read partial content from a huge ods file.
+
 {%endblock%}
 
 {% block write_to_file %}
@@ -55,6 +57,6 @@ You are likely to use it with `pyexcel <https://github.com/pyexcel/pyexcel>`_.
 Credits
 ================================================================================
 
-This library is based on the ods of messytables, Open Knowledge International.
+This library is based on the ods of messytables, Open Knowledge Foundation Ltd.
 
 {%endblock%}
