@@ -1,11 +1,11 @@
 import sys
 import math
 
-from messyods import ODSTableSet
-
-import pyexcel_odsr.converter as converter
 from pyexcel_io.book import BookReader
 from pyexcel_io.sheet import SheetReader
+
+from pyexcel_odsr.messyods import ODSTableSet
+import pyexcel_odsr.converter as converter
 
 PY2 = sys.version_info[0] == 2
 
