@@ -24,7 +24,8 @@ import re
 import zipfile
 
 from lxml import etree
-from pyexcel_odsr.converter import VALUE_TOKEN
+
+from pyexcel_odsr.converter import VALUE_TOKEN, PY2
 
 ODS_NAMESPACES_TAG_MATCH = re.compile(b"(<office:document-content[^>]*>)",
                                       re.MULTILINE)
@@ -111,6 +112,8 @@ class ODSRowSet(object):
         m = ODS_TABLE_NAME.match(self.sheet)
         if m:
             self.name = m.groups(0)[0]
+            if not PY2 and isinstance(self.name, bytes):
+                self.name = self.name.decode('utf-8')
 
         self.window = window or 1000
 

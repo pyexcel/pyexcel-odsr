@@ -31,6 +31,7 @@ You are likely to use it with `pyexcel <https://github.com/pyexcel/pyexcel>`_.
     >>> data.update({"Sheet 2": [[7, 8, 9], [10, 11, 12]]})
     >>> io = StringIO()
     >>> save_data(io, data)
+    >>> unused = io.seek(0)
     >>> # do something with the io
     >>> # In reality, you might give it to your http response
     >>> # object for downloading
