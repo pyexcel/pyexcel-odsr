@@ -4,3 +4,4 @@ coverage
 flake8
 pyexcel
 pyexcel-ods
+pyexcel-xls

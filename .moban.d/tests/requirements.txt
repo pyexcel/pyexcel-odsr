@@ -2,4 +2,5 @@
 {%block extras %}
 pyexcel
 pyexcel-ods
+pyexcel-xls
 {%endblock%}
