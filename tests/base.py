@@ -1,7 +1,7 @@
-import os # noqa
+import os  # noqa
 import pyexcel
-import datetime
-from nose.tools import raises, eq_
+import datetime  # noqa
+from nose.tools import raises, eq_  # noqa
 
 
 def create_sample_file1(file):
@@ -11,6 +11,8 @@ def create_sample_file1(file):
     table.append(data[4:8])
     table.append(data[8:12])
     pyexcel.save_as(array=table, dest_file_name=file)
+
+
 
 
 class ODSCellTypes:
