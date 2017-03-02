@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+DESCRIPTION = (
+    'a plugin to pyexcel and provides the capbility to read data in ods for' +
+    'mats using tailored messytables.' +
+    ''
+)
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
@@ -25,15 +30,19 @@ html_static_path = ['_static']
 htmlhelp_basename = 'pyexcel-odsrdoc'
 latex_elements = {}
 latex_documents = [
-    ('index', 'pyexcel-odsr.tex', u'pyexcel-odsr Documentation',
+    ('index', 'pyexcel-odsr.tex',
+     'pyexcel-odsr Documentation',
      'Onni Software Ltd.', 'manual'),
 ]
 man_pages = [
-    ('index', 'pyexcel-odsr', u'pyexcel-odsr Documentation',
+    ('index', 'pyexcel-odsr',
+     'pyexcel-odsr Documentation',
      [u'Onni Software Ltd.'], 1)
 ]
 texinfo_documents = [
-    ('index', 'pyexcel-odsr', u'pyexcel-odsr Documentation',
-     'Onni Software Ltd.', 'pyexcel-odsr', 'One line description of project.',
+    ('index', 'pyexcel-odsr',
+     'pyexcel-odsr Documentation',
+     'Onni Software Ltd.', 'pyexcel-odsr',
+     DESCRIPTION,
      'Miscellaneous'),
 ]

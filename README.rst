@@ -263,7 +263,7 @@ Then install relevant development requirements:
 #. pip install -r tests/requirements.txt
 
 
-In order to update test environment, and documentation, additional setps are
+In order to update test environment, and documentation, additional steps are
 required:
 
 #. pip install moban
@@ -292,7 +292,7 @@ Although `nose` and `doctest` are both used in code testing, it is adviable that
 
 On Linux/Unix systems, please launch your tests like this::
 
-    $ make test
+    $ make
 
 On Windows systems, please issue this command::
 

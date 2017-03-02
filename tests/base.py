@@ -13,8 +13,6 @@ def create_sample_file1(file):
     pyexcel.save_as(array=table, dest_file_name=file)
 
 
-
-
 class ODSCellTypes:
 
     def test_formats(self):
