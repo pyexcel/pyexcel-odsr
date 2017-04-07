@@ -31,25 +31,29 @@ class TestAddBooks:
         self._write_test_file(self.testfile2)
 
     def test_load_a_single_sheet(self):
-        b1 = pyexcel.get_book(file_name=self.testfile, sheet_name="Sheet1")
+        b1 = pyexcel.get_book(file_name=self.testfile, sheet_name="Sheet1",
+                              library='pyexcel-odsr')
         assert len(b1.sheet_names()) == 1
         assert b1['Sheet1'].to_array() == self.content['Sheet1']
 
     def test_load_a_single_sheet2(self):
-        b1 = pyexcel.load_book(self.testfile, sheet_index=0)
+        b1 = pyexcel.load_book(self.testfile, sheet_index=0,
+                               library='pyexcel-odsr')
         assert len(b1.sheet_names()) == 1
         assert b1['Sheet1'].to_array() == self.content['Sheet1']
 
     @raises(IndexError)
     def test_load_a_single_sheet3(self):
-        pyexcel.get_book(file_name=self.testfile, sheet_index=10000)
+        pyexcel.get_book(file_name=self.testfile, sheet_index=10000,
+                         library='pyexcel-odsr')
 
     @raises(ValueError)
     def test_load_a_single_sheet4(self):
-        pyexcel.get_book(file_name=self.testfile, sheet_name="Not exist")
+        pyexcel.get_book(file_name=self.testfile, sheet_name="Not exist",
+                         library='pyexcel-odsr')
 
     def test_delete_sheets(self):
-        b1 = pyexcel.load_book(self.testfile)
+        b1 = pyexcel.load_book(self.testfile, library='pyexcel-odsr')
         assert len(b1.sheet_names()) == 3
         del b1["Sheet1"]
         assert len(b1.sheet_names()) == 2
@@ -68,7 +72,7 @@ class TestAddBooks:
 
     def test_delete_sheets2(self):
         """repetitively delete first sheet"""
-        b1 = pyexcel.load_book(self.testfile)
+        b1 = pyexcel.load_book(self.testfile, library='pyexcel-odsr')
         del b1[0]
         assert len(b1.sheet_names()) == 2
         del b1[0]
@@ -80,7 +84,7 @@ class TestAddBooks:
         """
         test this scenario: book3 = book1 + book2
         """
-        b1 = pyexcel.get_book(file_name=self.testfile)
+        b1 = pyexcel.get_book(file_name=self.testfile, library='pyexcel-odsr')
         b2 = pyexcel.get_book(file_name=self.testfile2)
         b3 = b1 + b2
         content = b3.dict
@@ -98,7 +102,7 @@ class TestAddBooks:
         """
         test this scenario: book1 +=  book2
         """
-        b1 = pyexcel.BookReader(self.testfile)
+        b1 = pyexcel.BookReader(self.testfile, library='pyexcel-odsr')
         b2 = pyexcel.BookReader(self.testfile2)
         b1 += b2
         content = b1.dict
@@ -116,7 +120,7 @@ class TestAddBooks:
         """
         test this scenario: book3 = book1 + sheet3
         """
-        b1 = pyexcel.BookReader(self.testfile)
+        b1 = pyexcel.BookReader(self.testfile, library='pyexcel-odsr')
         b2 = pyexcel.BookReader(self.testfile2)
         b3 = b1 + b2["Sheet3"]
         content = b3.dict
@@ -134,7 +138,7 @@ class TestAddBooks:
         """
         test this scenario: book3 = book1 + sheet3
         """
-        b1 = pyexcel.BookReader(self.testfile)
+        b1 = pyexcel.BookReader(self.testfile, library='pyexcel-odsr')
         b2 = pyexcel.BookReader(self.testfile2)
         b1 += b2["Sheet3"]
         content = b1.dict
@@ -152,7 +156,7 @@ class TestAddBooks:
         """
         test this scenario: book3 = sheet1 + sheet2
         """
-        b1 = pyexcel.BookReader(self.testfile)
+        b1 = pyexcel.BookReader(self.testfile, library='pyexcel-odsr')
         b2 = pyexcel.BookReader(self.testfile2)
         b3 = b1["Sheet1"] + b2["Sheet3"]
         content = b3.dict
@@ -165,7 +169,7 @@ class TestAddBooks:
         """
         test this scenario: book3 = sheet1 + book
         """
-        b1 = pyexcel.BookReader(self.testfile)
+        b1 = pyexcel.BookReader(self.testfile, library='pyexcel-odsr')
         b2 = pyexcel.BookReader(self.testfile2)
         b3 = b1["Sheet1"] + b2
         content = b3.dict
@@ -183,7 +187,7 @@ class TestAddBooks:
         """
         test this scenario: book3 = sheet1 + book
         """
-        b1 = pyexcel.BookReader(self.testfile)
+        b1 = pyexcel.BookReader(self.testfile, library='pyexcel-odsr')
         try:
             b1 + 12
             assert 1 == 2

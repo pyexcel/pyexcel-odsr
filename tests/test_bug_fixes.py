@@ -6,7 +6,8 @@ from nose.tools import raises, eq_
 
 
 def test_bug_fix_for_issue_1():
-    data = get_data(os.path.join("tests", "fixtures", "repeated.ods"))
+    data = get_data(os.path.join("tests", "fixtures", "repeated.ods"),
+                    library='pyexcel-odsr')
     eq_(data["Sheet1"], [['repeated', 'repeated', 'repeated', 'repeated']])
 
 
@@ -31,26 +32,26 @@ def test_date_util_parse():
 
 @raises(Exception)
 def test_invalid_date():
-    from pyexcel_ods.ods import date_value
+    from pyexcel_odsr.converter import date_value
     value = "2015-08-"
     date_value(value)
 
 
 @raises(Exception)
 def test_fake_date_time_10():
-    from pyexcel_ods.ods import date_value
+    from pyexcel_odsr.converter import date_value
     date_value("1234567890")
 
 
 @raises(Exception)
 def test_fake_date_time_19():
-    from pyexcel_ods.ods import date_value
+    from pyexcel_odsr.converter import date_value
     date_value("1234567890123456789")
 
 
 @raises(Exception)
 def test_fake_date_time_20():
-    from pyexcel_ods.ods import date_value
+    from pyexcel_odsr.converter import date_value
     date_value("12345678901234567890")
 
 
@@ -58,12 +59,12 @@ def test_issue_14():
     # pyexcel issue 61
     test_file = "issue_61.ods"
     data = get_data(os.path.join("tests", "fixtures", test_file),
-                    skip_empty_rows=True)
+                    skip_empty_rows=True, library='pyexcel-odsr')
     eq_(data['S-LMC'], [[u'aaa'], [0]])
 
 
 def test_issue_1():
     test_file = "12_day_as_time.ods"
     data = get_data(os.path.join("tests", "fixtures", test_file),
-                    skip_empty_rows=True)
+                    skip_empty_rows=True, library='pyexcel-odsr')
     eq_(data['Sheet1'][0][0].days, 12)
