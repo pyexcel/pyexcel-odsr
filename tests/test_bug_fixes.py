@@ -74,4 +74,3 @@ def test_issue_1_error():
     from pyexcel_odsr.converter import time_value
     result = time_value('PT1111')
     eq_(result, None)
-
