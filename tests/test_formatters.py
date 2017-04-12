@@ -12,8 +12,7 @@ class TestAutoDetectInt(TestCase):
         pe.save_as(array=self.content, dest_file_name=self.test_file)
 
     def test_auto_detect_int(self):
-        sheet = pe.get_sheet(file_name=self.test_file,
-                             library='pyexcel-odsr')
+        sheet = pe.get_sheet(file_name=self.test_file)
         expected = dedent("""
         pyexcel_sheet1:
         +---+---+-----+
@@ -22,8 +21,7 @@ class TestAutoDetectInt(TestCase):
         self.assertEqual(str(sheet), expected)
 
     def test_get_book_auto_detect_int(self):
-        book = pe.get_book(file_name=self.test_file,
-                           library='pyexcel-odsr')
+        book = pe.get_book(file_name=self.test_file)
         expected = dedent("""
         pyexcel_sheet1:
         +---+---+-----+
@@ -32,8 +30,7 @@ class TestAutoDetectInt(TestCase):
         self.assertEqual(str(book), expected)
 
     def test_auto_detect_int_false(self):
-        sheet = pe.get_sheet(file_name=self.test_file, auto_detect_int=False,
-                             library='pyexcel-odsr')
+        sheet = pe.get_sheet(file_name=self.test_file, auto_detect_int=False)
         expected = dedent("""
         pyexcel_sheet1:
         +-----+-----+-----+
@@ -42,8 +39,7 @@ class TestAutoDetectInt(TestCase):
         self.assertEqual(str(sheet), expected)
 
     def test_get_book_auto_detect_int_false(self):
-        book = pe.get_book(file_name=self.test_file, auto_detect_int=False,
-                           library='pyexcel-odsr')
+        book = pe.get_book(file_name=self.test_file, auto_detect_int=False)
         expected = dedent("""
         pyexcel_sheet1:
         +-----+-----+-----+

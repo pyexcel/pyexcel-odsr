@@ -7,7 +7,7 @@ except ImportError:
 
 NAME = 'pyexcel-odsr'
 AUTHOR = 'C.W.'
-VERSION = '0.3.0'
+VERSION = '0.4.0'
 EMAIL = 'wangc_2011 (at) hotmail.com'
 LICENSE = 'New BSD'
 DESCRIPTION = (
@@ -37,7 +37,7 @@ CLASSIFIERS = [
 ]
 
 INSTALL_REQUIRES = [
-    'pyexcel-io>=0.3.0',
+    'pyexcel-io>=0.4.0',
     'lxml>=3.2',
 ]
 

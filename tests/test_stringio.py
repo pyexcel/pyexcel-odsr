@@ -11,8 +11,7 @@ class TestStringIO:
         create_sample_file1(testfile)
         with open(testfile, "rb") as f:
             content = f.read()
-            r = pyexcel.get_sheet(file_type="ods", file_content=content,
-                                  library='pyexcel-odsr')
+            r = pyexcel.get_sheet(file_type="ods", file_content=content)
             result = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 1.1, 1]
             actual = list(r.enumerate())
             eq_(result, actual)
@@ -26,8 +25,7 @@ class TestStringIO:
         ]
         io = pyexcel.save_as(dest_file_type="ods",
                              array=data)
-        r = pyexcel.get_sheet(file_type="ods", file_content=io.getvalue(),
-                              library='pyexcel-odsr')
+        r = pyexcel.get_sheet(file_type="ods", file_content=io.getvalue())
         result = [1, 2, 3, 4, 5, 6]
         actual = list(r.enumerate())
         eq_(result, actual)
