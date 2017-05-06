@@ -190,18 +190,21 @@ def _read_cell(element):
 
 
 def _read_text_cell(element):
-    children = element.getchildren()
-    text_content = []
-    for child in children:
-        if child.text:
-            text_content.append(child.text)
-        else:
-            text_content.append('')
+    text_content = _recursively_read_text_cell(element)
     if len(text_content) > 0:
         cell_value = '\n'.join(text_content)
     else:
         cell_value = ''
     return (cell_value, 'string')
+
+
+def _recursively_read_text_cell(element):
+    children = element.getchildren()
+    texts = []
+    for child in children:
+        text = "".join([x for x in child.itertext()])
+        texts.append(text)
+    return texts
 
 
 def _tag(namespace, tag):
