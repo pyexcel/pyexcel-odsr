@@ -76,8 +76,8 @@ def test_issue_1_error():
     eq_(result, None)
 
 
-def test_issue_19():
-    test_file = "pyexcel_81_ods_19.ods"
+def test_issue_2():
+    test_file = "multinode-in-a-p.ods"
     data = get_data(os.path.join("tests", "fixtures", test_file),
                     skip_empty_rows=True, library='pyexcel-odsr')
     eq_(data['product.template'][1][1], 'PRODUCT NAME PMP')
