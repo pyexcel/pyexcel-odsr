@@ -74,3 +74,13 @@ def test_issue_1_error():
     from pyexcel_odsr.converter import time_value
     result = time_value('PT1111')
     eq_(result, None)
+<<<<<<< HEAD
+=======
+
+
+def test_issue_2():
+    test_file = "multinode-in-a-p.ods"
+    data = get_data(os.path.join("tests", "fixtures", test_file),
+                    skip_empty_rows=True, library='pyexcel-odsr')
+    eq_(data['product.template'][1][1], 'PRODUCT NAME PMP')
+>>>>>>> master

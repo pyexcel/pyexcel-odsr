@@ -2,11 +2,14 @@
 pyexcel-odsr - Let you focus on data, instead of ods format
 ================================================================================
 
-.. image:: https://api.travis-ci.org/pyexcel/pyexcel-odsr.png
-    :target: http://travis-ci.org/pyexcel/pyexcel-odsr
+.. image:: https://raw.githubusercontent.com/pyexcel/pyexcel.github.io/master/images/patreon.png
+   :target: https://www.patreon.com/pyexcel
+
+.. image:: https://api.travis-ci.org/pyexcel/pyexcel-odsr.svg?branch=master
+   :target: http://travis-ci.org/pyexcel/pyexcel-odsr
 
 .. image:: https://codecov.io/github/pyexcel/pyexcel-odsr/coverage.png
-    :target: https://codecov.io/github/pyexcel/pyexcel-odsr
+   :target: https://codecov.io/github/pyexcel/pyexcel-odsr
 
 **pyexcel-odsr** is a specialized ods reader based on tailored ods reader from
 `messytables <https://github.com/okfn/messytables>`_.
@@ -35,7 +38,7 @@ or clone it and install it:
 
 .. code-block:: bash
 
-    $ git clone http://github.com/pyexcel/pyexcel-odsr.git
+    $ git clone https://github.com/pyexcel/pyexcel-odsr.git
     $ cd pyexcel-odsr
     $ python setup.py install
 
@@ -310,3 +313,10 @@ This library is based on the ods of messytables, Open Knowledge Foundation Ltd.
    >>> import os
    >>> os.unlink("your_file.ods")
    >>> os.unlink("another_file.ods")
+
+Support the project
+================================================================================
+
+If your company has embedded pyexcel and its components into a revenue generating
+product, please `support me on patreon <https://www.patreon.com/pyexcel>`_ to
+maintain the project and develop it further.
