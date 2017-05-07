@@ -1,12 +1,13 @@
 import os
-from pyexcel_odsr import ods as odsr
-from pyexcel_ods import ods
+from pyexcel_odsr.odsr import ODSBook
+from pyexcel_ods.odsw import ODSWriter
+
 from base import ODSCellTypes
 
 
 class TestODSReader(ODSCellTypes):
     def setUp(self):
-        r = odsr.ODSBook()
+        r = ODSBook()
         r.open(os.path.join("tests",
                             "fixtures",
                             "ods_formats.ods"))
@@ -18,17 +19,17 @@ class TestODSReader(ODSCellTypes):
 
 class TestODSWriter(ODSCellTypes):
     def setUp(self):
-        r = odsr.ODSBook()
+        r = ODSBook()
         r.open(os.path.join("tests",
                             "fixtures",
                             "ods_formats.ods"))
         self.data1 = r.read_all()
         self.testfile = "odswriter.ods"
-        w = ods.ODSWriter()
+        w = ODSWriter()
         w.open(self.testfile)
         w.write(self.data1)
         w.close()
-        r2 = odsr.ODSBook()
+        r2 = ODSBook()
         r2.open(self.testfile)
         self.data = r2.read_all()
         for key in self.data.keys():

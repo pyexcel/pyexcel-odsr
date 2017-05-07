@@ -1,3 +1,11 @@
+"""
+    pyexcel_odsr.odsr
+    ~~~~~~~~~~~~~~~~~~~
+    The lower level ods file format handler using messytables
+
+    :copyright: (c) 2015-2017 by Onni Software Ltd & its contributors
+    :license: New BSD License
+"""
 import sys
 import math
 

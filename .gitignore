@@ -91,6 +91,5 @@ ENV/
 .ropeproject
 *~
 commons/
-doc/build/
-cover/
-coverage/
+commons
+.moban.hashes
