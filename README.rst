@@ -11,9 +11,6 @@ pyexcel-odsr - Let you focus on data, instead of ods format
 .. image:: https://codecov.io/github/pyexcel/pyexcel-odsr/coverage.png
    :target: https://codecov.io/github/pyexcel/pyexcel-odsr
 
-.. image:: https://readthedocs.org/projects/pyexcel-odsr/badge/?version=latest
-   :target: http://pyexcel-odsr.readthedocs.org/en/latest/
-
 **pyexcel-odsr** is a specialized ods reader based on tailored ods reader from
 `messytables <https://github.com/okfn/messytables>`_.
 You are likely to use it with `pyexcel <https://github.com/pyexcel/pyexcel>`_.
