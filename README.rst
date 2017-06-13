@@ -43,6 +43,21 @@ or clone it and install it:
     $ cd pyexcel-odsr
     $ python setup.py install
 
+Support the project
+================================================================================
+
+If your company has embedded pyexcel and its components into a revenue generating
+product, please `support me on patreon <https://www.patreon.com/bePatron?u=5537627>`_ to
+maintain the project and develop it further.
+
+If you are an individual, you are welcome to support me too on patreon and for however long
+you feel like to. As a patreon, you will receive
+`early access to pyexcel related contents <https://www.patreon.com/pyexcel/posts>`_.
+
+With your financial support, I will be able to invest
+a little bit more time in coding, documentation and writing interesting posts.
+
+
 Usage
 ================================================================================
 
@@ -314,10 +329,3 @@ This library is based on the ods of messytables, Open Knowledge Foundation Ltd.
    >>> import os
    >>> os.unlink("your_file.ods")
    >>> os.unlink("another_file.ods")
-
-Support the project
-================================================================================
-
-If your company has embedded pyexcel and its components into a revenue generating
-product, please `support me on patreon <https://www.patreon.com/bePatron?u=5537627>`_ to
-maintain the project and develop it further.
