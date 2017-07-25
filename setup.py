@@ -7,18 +7,21 @@ except ImportError:
 
 NAME = 'pyexcel-odsr'
 AUTHOR = 'C.W.'
-VERSION = '0.4.0'
-EMAIL = 'wangc_2011 (at) hotmail.com'
+VERSION = '0.4.1'
+EMAIL = 'wangc_2011@hotmail.com'
 LICENSE = 'New BSD'
 DESCRIPTION = (
     'a plugin to pyexcel and provides the capbility to read data in ods for' +
     'mats using tailored messytables.' +
     ''
 )
+URL = 'https://github.com/pyexcel/pyexcel-odsr'
+DOWNLOAD_URL = '%s/archive/0.4.0.tar.gz' % URL
+FILES = ['README.rst', 'CONTRIBUTORS.rst', 'CHANGELOG.rst']
 KEYWORDS = [
     'excel',
-    'python',
-    'pyexcel',
+    'ods',
+    'python'
 ]
 
 CLASSIFIERS = [
@@ -81,7 +84,11 @@ def filter_out_test_code(file_handle):
                     found_test_code = False
                     yield line
         else:
-            yield line
+            for keyword in ['|version|', '|today|']:
+                if keyword in line:
+                    break
+            else:
+                yield line
 
 
 if __name__ == '__main__':
@@ -91,7 +98,9 @@ if __name__ == '__main__':
         version=VERSION,
         author_email=EMAIL,
         description=DESCRIPTION,
-        long_description=read_files('README.rst', 'CHANGELOG.rst'),
+        url=URL,
+        download_url=DOWNLOAD_URL,
+        long_description=read_files(*FILES),
         license=LICENSE,
         keywords=KEYWORDS,
         extras_require=EXTRAS_REQUIRE,

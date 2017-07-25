@@ -6,3 +6,6 @@
 {%block compat_block%}
 {%endblock%}
 
+{%block morefiles -%}
+'CONTRIBUTORS.rst'
+{%- endblock%}

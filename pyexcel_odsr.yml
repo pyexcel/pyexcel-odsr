@@ -1,10 +1,14 @@
 overrides: "pyexcel.yaml"
 name: "pyexcel-odsr"
 nick_name: odsr
-version: 0.4.0
+version: 0.4.1
+current_version: 0.4.1
 release: 0.4.0
 file_type: ods
 dependencies:
   - pyexcel-io>=0.4.0
   - lxml>=3.2
+keywords:
+  - excel
+  - ods
 description: a plugin to pyexcel and provides the capbility to read data in ods formats using tailored messytables.
