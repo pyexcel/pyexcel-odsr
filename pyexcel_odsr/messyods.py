@@ -209,7 +209,7 @@ class FODSTableSet(object):
 
         self.window = window
 
-        self.content = open(fileobj, 'r').read()
+        self.content = open(fileobj, 'rb').read()
 
     def make_tables(self):
         """
