@@ -34,6 +34,7 @@ ODS_TABLE_MATCH = re.compile(b".*?(<table:table.*?<\/.*?:table>).*?",
 ODS_TABLE_NAME = re.compile(b".*?table:name=\"(.*?)\".*?")
 ODS_ROW_MATCH = re.compile(b".*?(<table:table-row.*?<\/.*?:table-row>).*?",
                            re.MULTILINE)
+ODS_DOCUMENT_CLOSE_TAG = b'</office:document-content>'
 FODS_NAMESPACES_TAG_MATCH = re.compile(b"(<office:document[^>]*>)",
                                        re.DOTALL)
 FODS_TABLE_MATCH = re.compile(b".*?(<table:table.*?<\/.*?:table>).*?",
@@ -41,6 +42,7 @@ FODS_TABLE_MATCH = re.compile(b".*?(<table:table.*?<\/.*?:table>).*?",
 FODS_TABLE_NAME = re.compile(b".*?table:name=\"(.*?)\".*?")
 FODS_ROW_MATCH = re.compile(b".*?(<table:table-row.*?<\/.*?:table-row>).*?",
                             re.DOTALL)
+FODS_DOCUMENT_CLOSE_TAG = b'</office:document>'
 NS_OPENDOCUMENT_PTTN = u"urn:oasis:names:tc:opendocument:xmlns:%s"
 NS_CAL_PTTN = u"urn:org:documentfoundation:names:experimental:calc:xmlns:%s"
 NS_OPENDOCUMENT_TABLE = NS_OPENDOCUMENT_PTTN % "table:1.0"
@@ -49,6 +51,17 @@ NS_OPENDOCUMENT_OFFICE = NS_OPENDOCUMENT_PTTN % "office:1.0"
 TABLE_CELL = 'table-cell'
 VALUE_TYPE = 'value-type'
 COLUMN_REPEAT = 'number-columns-repeated'
+
+DEFAULT_NAMESPACES = {
+    "dc": u"http://purl.org/dc/elements/1.1/",
+    "draw": NS_OPENDOCUMENT_PTTN % u"drawing:1.0",
+    "number": NS_OPENDOCUMENT_PTTN % u"datastyle:1.0",
+    "office": NS_OPENDOCUMENT_PTTN % u"office:1.0",
+    "svg": NS_OPENDOCUMENT_PTTN % u"svg-compatible:1.0",
+    "table": NS_OPENDOCUMENT_PTTN % u"table:1.0",
+    "text": NS_OPENDOCUMENT_PTTN % u"text:1.0",
+    "calcext": NS_CAL_PTTN % u"calcext:1.0",
+}
 
 
 class ODSTableSet(object):
@@ -84,6 +97,10 @@ class ODSTableSet(object):
         zf = zipfile.ZipFile(fileobj).open("content.xml")
         self.content = zf.read()
         zf.close()
+        self._table_matcher = ODS_TABLE_MATCH
+        self._document_close_tag = ODS_DOCUMENT_CLOSE_TAG
+        self._namespace_tag_matcher = ODS_NAMESPACES_TAG_MATCH
+        self._row_set_cls = ODSRowSet
 
     def make_tables(self):
         """
@@ -96,15 +113,15 @@ class ODSTableSet(object):
         """
         namespace_tags = self._get_namespace_tags()
         sheets = [m.groups(0)[0]
-                  for m in ODS_TABLE_MATCH.finditer(self.content)]
-        return [ODSRowSet(sheet, self.window, namespace_tags)
+                  for m in self._table_matcher.finditer(self.content)]
+        return [self._row_set_cls(sheet, self.window, namespace_tags)
                 for sheet in sheets]
 
     def _get_namespace_tags(self):
-        match = re.search(ODS_NAMESPACES_TAG_MATCH, self.content)
+        match = re.search(self._namespace_tag_matcher, self.content)
         assert match
         tag_open = match.groups()[0]
-        tag_close = b'</office:document-content>'
+        tag_close = self._document_close_tag
         return tag_open, tag_close
 
 
@@ -133,16 +150,7 @@ class ODSRowSet(object):
         if namespace_tags:
             self.namespace_tags = namespace_tags
         else:
-            namespaces = {
-                "dc": u"http://purl.org/dc/elements/1.1/",
-                "draw": NS_OPENDOCUMENT_PTTN % u"drawing:1.0",
-                "number": NS_OPENDOCUMENT_PTTN % u"datastyle:1.0",
-                "office": NS_OPENDOCUMENT_PTTN % u"office:1.0",
-                "svg": NS_OPENDOCUMENT_PTTN % u"svg-compatible:1.0",
-                "table": NS_OPENDOCUMENT_PTTN % u"table:1.0",
-                "text": NS_OPENDOCUMENT_PTTN % u"text:1.0",
-                "calcext": NS_CAL_PTTN % u"calcext:1.0",
-            }
+            namespaces = DEFAULT_NAMESPACES
 
             ods_header = u"<wrapper {0}>"\
                 .format(" ".join('xmlns:{0}="{1}"'.format(k, v)
@@ -150,9 +158,11 @@ class ODSRowSet(object):
             ods_footer = u"</wrapper>".encode('utf-8')
             self.namespace_tags = (ods_header, ods_footer)
 
+        self._row_matcher = ODS_ROW_MATCH
+
     def raw(self, sample=False):
         """ Iterate over all rows in this sheet. """
-        rows = ODS_ROW_MATCH.findall(self.sheet)
+        rows = self._row_matcher.findall(self.sheet)
 
         for row in rows:
             row_data = []
@@ -179,7 +189,7 @@ class ODSRowSet(object):
         del rows
 
 
-class FODSTableSet(object):
+class FODSTableSet(ODSTableSet):
     """
     A wrapper around ODS files. Because they are zipped and the info we want
     is in the zipped file as content.xml we must ensure that we either have
@@ -211,98 +221,19 @@ class FODSTableSet(object):
 
         self.content = open(fileobj, 'rb').read()
 
-    def make_tables(self):
-        """
-            Return the sheets in the workbook.
-
-            A regex is used for this to avoid having to:
-
-            1. load large the entire file into memory, or
-            2. SAX parse the file more than once
-        """
-        namespace_tags = self._get_namespace_tags()
-        sheets = [m.groups(0)[0]
-                  for m in FODS_TABLE_MATCH.finditer(self.content)]
-        return [FODSRowSet(sheet, self.window, namespace_tags)
-                for sheet in sheets]
-
-    def _get_namespace_tags(self):
-        match = re.search(FODS_NAMESPACES_TAG_MATCH, self.content)
-        assert match
-        tag_open = match.groups()[0]
-        tag_close = b'</office:document>'
-        return tag_open, tag_close
+        self._table_matcher = FODS_TABLE_MATCH
+        self._document_close_tag = FODS_DOCUMENT_CLOSE_TAG
+        self._namespace_tag_matcher = FODS_NAMESPACES_TAG_MATCH
+        self._row_set_cls = FODSRowSet
 
 
-class FODSRowSet(object):
+class FODSRowSet(ODSRowSet):
     """ ODS support for a single sheet in the ODS workbook. Unlike
     the CSV row set this is not a streaming operation. """
 
     def __init__(self, sheet, window=None, namespace_tags=None):
-        self.sheet = sheet
-
-        self.name = "Unknown"
-        m = FODS_TABLE_NAME.match(self.sheet)
-        if m:
-            self.name = m.groups(0)[0]
-            if not PY2 and isinstance(self.name, bytes):
-                self.name = self.name.decode('utf-8')
-
-        self.window = window or 1000
-
-        # We must wrap the XML fragments in a valid header otherwise iterparse
-        # will explode with certain (undefined) versions of libxml2. The
-        # namespaces are in the ODS file, and change with the libreoffice
-        # version saving it, so get them from the ODS file if possible. The
-        # default namespaces are an option to preserve backwards compatibility
-        # of ODSRowSet.
-        if namespace_tags:
-            self.namespace_tags = namespace_tags
-        else:
-            namespaces = {
-                "dc": u"http://purl.org/dc/elements/1.1/",
-                "draw": NS_OPENDOCUMENT_PTTN % u"drawing:1.0",
-                "number": NS_OPENDOCUMENT_PTTN % u"datastyle:1.0",
-                "office": NS_OPENDOCUMENT_PTTN % u"office:1.0",
-                "svg": NS_OPENDOCUMENT_PTTN % u"svg-compatible:1.0",
-                "table": NS_OPENDOCUMENT_PTTN % u"table:1.0",
-                "text": NS_OPENDOCUMENT_PTTN % u"text:1.0",
-                "calcext": NS_CAL_PTTN % u"calcext:1.0",
-            }
-
-            ods_header = u"<wrapper {0}>"\
-                .format(" ".join('xmlns:{0}="{1}"'.format(k, v)
-                        for k, v in namespaces.iteritems())).encode('utf-8')
-            ods_footer = u"</wrapper>".encode('utf-8')
-            self.namespace_tags = (ods_header, ods_footer)
-
-    def raw(self, sample=False):
-        """ Iterate over all rows in this sheet. """
-        rows = FODS_ROW_MATCH.findall(self.sheet)
-
-        for row in rows:
-            row_data = []
-
-            block = self.namespace_tags[0] + row + self.namespace_tags[1]
-            partial = io.BytesIO(block)
-
-            for action, element in etree.iterparse(partial, ('end',)):
-                if element.tag != _tag(NS_OPENDOCUMENT_TABLE, TABLE_CELL):
-                    continue
-
-                cell = _read_cell(element)
-                repeat = element.attrib.get(
-                    _tag(NS_OPENDOCUMENT_TABLE, COLUMN_REPEAT))
-
-                if repeat:
-                    number_of_repeat = int(repeat)
-                    row_data += [cell] * number_of_repeat
-                else:
-                    row_data.append(cell)
-
-            del partial
-            yield row_data
-        del rows
+        super(FODSRowSet, self).__init__(sheet, window, namespace_tags)
+        self._row_matcher = FODS_ROW_MATCH
 
 
 def _read_cell(element):
