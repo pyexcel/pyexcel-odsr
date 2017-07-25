@@ -22,7 +22,7 @@ __FILE_TYPE_FODS__ = 'fods'
 IOPluginInfoChain(__name__).add_a_reader(
     relative_plugin_class_path='odsr.FODSBook',
     file_types=[__FILE_TYPE_FODS__],
-    stream_type='binary'
+    stream_type='text'
 )
 
 from pyexcel_io.io import get_data as read_data, isstream
