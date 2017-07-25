@@ -12,14 +12,13 @@ from pyexcel_io.plugins import IOPluginInfoChain
 from pyexcel_io.io import get_data as read_data, isstream, store_data as write_data
 
 __FILE_TYPE__ = 'ods'
+__FILE_TYPE_FODS__ = 'fods'
+
 IOPluginInfoChain(__name__).add_a_reader(
     relative_plugin_class_path='odsr.ODSBook',
     file_types=[__FILE_TYPE__],
     stream_type='binary'
-)
-
-__FILE_TYPE_FODS__ = 'fods'
-IOPluginInfoChain(__name__).add_a_reader(
+).add_a_reader(
     relative_plugin_class_path='odsr.FODSBook',
     file_types=[__FILE_TYPE_FODS__],
     stream_type='text'

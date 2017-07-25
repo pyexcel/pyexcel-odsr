@@ -104,29 +104,13 @@ class ODSBook(BookReader):
         self._native_book = ODSTableSet(self._file_name)
 
 
-class FODSBook(BookReader):
-    """read ods book"""
-    def open(self, file_name, **keywords):
-        """open fods file"""
-        BookReader.open(self, file_name, **keywords)
-        self._load_from_file()
-
-    def read_all(self):
-        """read all sheets"""
-        result = OrderedDict()
-        for sheet in self._native_book.make_tables():
-            ods_sheet = ODSSheet(sheet, **self._keywords)
-            result[ods_sheet.name] = ods_sheet.to_array()
-
-        return result
-
-    def read_sheet(self, native_sheet):
-        """read one native sheet"""
-        sheet = ODSSheet(native_sheet, **self._keywords)
-        return {sheet.name: sheet.to_array()}
-
+class FODSBook(ODSBook):
+    """read fods book"""
     def _load_from_file(self):
         self._native_book = FODSTableSet(self._file_name)
+
+    def _load_from_memory(self):
+        self._native_book = ODSTableSet(self._file_stream)
 
 
 def is_integer_ok_for_xl_float(value):
