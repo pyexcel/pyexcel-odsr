@@ -1,6 +1,11 @@
 Contributors
 ================
 
+Author is in setup.py file and module __author__. Hence please find the
+contributors here.
+
 In alphabetic order:
 
-*. `C. W. <https://github.com/chfw>`_ (Author)
+*. `Jona <https://github.com/jonadem>`_
+
+
