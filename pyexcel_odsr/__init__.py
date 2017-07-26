@@ -5,11 +5,9 @@
     :copyright: (c) 2015-2017 by Onni Software Ltd & its contributors
     :license: New BSD License
 """
-# flake8: noqa
-# this line has to be place above all else
-# because of dynamic import
 from pyexcel_io.plugins import IOPluginInfoChain
-from pyexcel_io.io import get_data as read_data, isstream, store_data as write_data
+from pyexcel_io.io import get_data as read_data, isstream
+from pyexcel_odsr._version import __version__, __author__  # flake8: noqa
 
 __FILE_TYPE__ = 'ods'
 __FILE_TYPE_FODS__ = 'fods'
@@ -23,8 +21,6 @@ IOPluginInfoChain(__name__).add_a_reader(
     file_types=[__FILE_TYPE_FODS__],
     stream_type='text'
 )
-
-from pyexcel_io.io import get_data as read_data, isstream
 
 
 def get_data(afile, file_type=None, **keywords):
