@@ -1,6 +1,7 @@
 import os
 from pyexcel_odsr.odsr import ODSBook
 from pyexcel_ods.odsw import ODSWriter
+from pyexcel._compact import BytesIO
 
 from base import ODSCellTypes
 
@@ -11,6 +12,33 @@ class TestODSReader(ODSCellTypes):
         r.open(os.path.join("tests",
                             "fixtures",
                             "ods_formats.ods"))
+        self.data = r.read_all()
+        for key in self.data.keys():
+            self.data[key] = list(self.data[key])
+        r.close()
+
+
+class TestODSReaderStream(ODSCellTypes):
+    def setUp(self):
+        r = ODSBook()
+        with open(os.path.join("tests",
+                               "fixtures",
+                               "ods_formats.ods"), 'rb') as f:
+            r.open_stream(f)
+        self.data = r.read_all()
+        for key in self.data.keys():
+            self.data[key] = list(self.data[key])
+        r.close()
+
+
+class TestODSReaderBytesIO(ODSCellTypes):
+    def setUp(self):
+        r = ODSBook()
+        with open(os.path.join("tests",
+                               "fixtures",
+                               "ods_formats.ods"), 'rb') as f:
+            io = BytesIO(f.read())
+            r.open_stream(io)
         self.data = r.read_all()
         for key in self.data.keys():
             self.data[key] = list(self.data[key])
