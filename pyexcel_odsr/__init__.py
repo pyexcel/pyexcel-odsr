@@ -19,7 +19,7 @@ IOPluginInfoChain(__name__).add_a_reader(
 ).add_a_reader(
     relative_plugin_class_path='odsr.FODSBook',
     file_types=[__FILE_TYPE_FODS__],
-    stream_type='text'
+    stream_type='binary'
 )
 
 

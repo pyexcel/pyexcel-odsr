@@ -110,7 +110,7 @@ class FODSBook(ODSBook):
         self._native_book = FODSTableSet(self._file_name)
 
     def _load_from_memory(self):
-        self._native_book = ODSTableSet(self._file_stream)
+        self._native_book = FODSTableSet(self._file_stream)
 
 
 def is_integer_ok_for_xl_float(value):

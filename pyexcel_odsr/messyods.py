@@ -212,14 +212,12 @@ class FODSTableSet(ODSTableSet):
         functionality.
         '''
         if hasattr(fileobj, 'read'):
-            # wrap in a StringIO so we do not have hassle with seeks and
-            # binary etc (see notes to __init__ above)
-            # TODO: rather wasteful if in fact fileobj comes from disk
-            fileobj = io.BytesIO(fileobj.read())
+            self.content = fileobj.read()
+        else:
+            with open(fileobj, 'rb') as f:
+                self.content = f.read()
 
         self.window = window
-
-        self.content = open(fileobj, 'rb').read()
 
         self._table_matcher = FODS_TABLE_MATCH
         self._document_close_tag = FODS_DOCUMENT_CLOSE_TAG
