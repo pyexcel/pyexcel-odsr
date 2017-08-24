@@ -120,7 +120,7 @@ def test_issue_83_ods_file_handle():
 def test_issue_23():
     if not IN_TRAVIS:
         raise SkipTest()
-    pe.get_book(url="https://github.com/pyexcel/pyexcel-ods/raw/master/tests/fixtures/white_space.ods");  # flake8: noqa
+    pe.get_book(url="https://github.com/pyexcel/pyexcel-ods/raw/master/tests/fixtures/white_space.ods", library='pyexcel-odsr');  # flake8: noqa
 
 def get_fixtures(filename):
     return os.path.join("tests", "fixtures", filename)
