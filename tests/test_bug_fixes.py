@@ -5,6 +5,9 @@ import psutil
 import pyexcel as pe
 from pyexcel_odsr import get_data
 from nose.tools import raises, eq_
+from nose import SkipTest
+
+IN_TRAVIS = 'TRAVIS' in os.environ
 
 
 def test_bug_fix_for_issue_1():
@@ -113,6 +116,11 @@ def test_issue_83_ods_file_handle():
     # this confirms that no more open file handle
     eq_(open_files_l1, open_files_l4)
 
+
+def test_issue_23():
+    #if not IN_TRAVIS:
+    #    raise SkipTest()
+    pe.get_book(url="https://github.com/pyexcel/pyexcel-ods/raw/master/tests/fixtures/white_space.ods");  # flake8: noqa
 
 def get_fixtures(filename):
     return os.path.join("tests", "fixtures", filename)
