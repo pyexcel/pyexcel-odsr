@@ -7,7 +7,7 @@ except ImportError:
 
 NAME = 'pyexcel-odsr'
 AUTHOR = 'C.W.'
-VERSION = '0.4.2'
+VERSION = '0.4.3'
 EMAIL = 'wangc_2011@hotmail.com'
 LICENSE = 'New BSD'
 DESCRIPTION = (
