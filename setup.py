@@ -16,7 +16,7 @@ DESCRIPTION = (
     ''
 )
 URL = 'https://github.com/pyexcel/pyexcel-odsr'
-DOWNLOAD_URL = '%s/archive/0.4.2.tar.gz' % URL
+DOWNLOAD_URL = '%s/archive/0.4.3.tar.gz' % URL
 FILES = ['README.rst', 'CONTRIBUTORS.rst', 'CHANGELOG.rst']
 KEYWORDS = [
     'excel',
