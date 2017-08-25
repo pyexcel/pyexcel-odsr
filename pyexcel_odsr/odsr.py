@@ -6,15 +6,12 @@
     :copyright: (c) 2015-2017 by Onni Software Ltd & its contributors
     :license: New BSD License
 """
-import math
-from io import UnsupportedOperation
-
 from pyexcel_io.book import BookReader
 from pyexcel_io.sheet import SheetReader
-from pyexcel_io._compact import OrderedDict, BytesIO
+from pyexcel_io._compact import OrderedDict
+import pyexcel_io.service as service
 
 from pyexcel_odsr.messyods import ODSTableSet, FODSTableSet
-import pyexcel_odsr.converter as converter
 
 
 class ODSSheet(SheetReader):
@@ -41,10 +38,10 @@ class ODSSheet(SheetReader):
 
     def __convert_cell(self, cell):
         ret = None
-        if cell[1] in converter.VALUE_CONVERTERS:
-            n_value = converter.VALUE_CONVERTERS[cell[1]](cell[0])
+        if cell[1] in service.VALUE_CONVERTERS:
+            n_value = service.VALUE_CONVERTERS[cell[1]](cell[0])
             if cell[1] == 'float' and self.__auto_detect_int:
-                if is_integer_ok_for_xl_float(n_value):
+                if service.has_no_digits_in_float(n_value):
                     n_value = int(n_value)
             ret = n_value
         else:
@@ -61,16 +58,6 @@ class ODSBook(BookReader):
 
     def open_stream(self, file_stream, **keywords):
         """open ods file stream"""
-        if not hasattr(file_stream, 'seek'):
-            # python 2
-            # Hei zipfile in odfpy would do a seek
-            # but stream from urlib cannot do seek
-            file_stream = BytesIO(file_stream.read())
-        try:
-            file_stream.seek(0)
-        except UnsupportedOperation:
-            # python 3
-            file_stream = BytesIO(file_stream.read())
         BookReader.open_stream(self, file_stream, **keywords)
         self._load_from_memory()
 
@@ -122,8 +109,3 @@ class FODSBook(ODSBook):
 
     def _load_from_memory(self):
         self._native_book = FODSTableSet(self._file_stream)
-
-
-def is_integer_ok_for_xl_float(value):
-    """check if a float had zero value in digits"""
-    return value == math.floor(value)
