@@ -25,7 +25,7 @@ import zipfile
 
 from lxml import etree
 
-from pyexcel_odsr.converter import VALUE_TOKEN, PY2
+from pyexcel_io.service import VALUE_TOKEN, PY2
 
 ODS_NAMESPACES_TAG_MATCH = re.compile(b"(<office:document-content[^>]*>)",
                                       re.MULTILINE)
