@@ -7,7 +7,7 @@ except ImportError:
 
 NAME = 'pyexcel-odsr'
 AUTHOR = 'C.W.'
-VERSION = '0.4.3'
+VERSION = '0.5.0'
 EMAIL = 'wangc_2011@hotmail.com'
 LICENSE = 'New BSD'
 DESCRIPTION = (
@@ -16,7 +16,7 @@ DESCRIPTION = (
     ''
 )
 URL = 'https://github.com/pyexcel/pyexcel-odsr'
-DOWNLOAD_URL = '%s/archive/0.4.3.tar.gz' % URL
+DOWNLOAD_URL = '%s/archive/0.5.0.tar.gz' % URL
 FILES = ['README.rst', 'CONTRIBUTORS.rst', 'CHANGELOG.rst']
 KEYWORDS = [
     'excel',
@@ -40,7 +40,7 @@ CLASSIFIERS = [
 ]
 
 INSTALL_REQUIRES = [
-    'pyexcel-io>=0.4.0',
+    'pyexcel-io>=0.5.0',
     'lxml>=3.2',
 ]
 
