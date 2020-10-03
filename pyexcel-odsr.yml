@@ -1,12 +1,12 @@
 overrides: "pyexcel.yaml"
 name: "pyexcel-odsr"
 nick_name: odsr
-version: 0.4.3
-current_version: 0.4.3
-release: 0.4.3
+version: 0.5.2
+current_version: 0.5.2
+release: 0.5.2
 file_type: ods
 dependencies:
-  - pyexcel-io>=0.4.0
+  - pyexcel-io>=0.5.3
   - lxml>=3.2
 keywords:
   - excel
