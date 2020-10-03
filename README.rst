@@ -1,5 +1,5 @@
 ================================================================================
- - Let you focus on data, instead of  format
+pyexcel-odsr - Let you focus on data, instead of ods format
 ================================================================================
 
 .. image:: https://raw.githubusercontent.com/pyexcel/pyexcel.github.io/master/images/patreon.png
@@ -8,18 +8,18 @@
 .. image:: https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg
    :target: https://awesome-python.com/#specific-formats-processing
 
-.. image:: https://travis-ci.org//.svg?branch=
-   :target: http://travis-ci.org//
+.. image:: https://travis-ci.org/pyexcel/pyexcel-odsr.svg?branch=master
+   :target: http://travis-ci.org/pyexcel/pyexcel-odsr
 
-.. image:: https://codecov.io/gh///branch/master/graph/badge.svg
-   :target: https://codecov.io/gh//
+.. image:: https://codecov.io/gh/pyexcel/pyexcel-odsr/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/pyexcel/pyexcel-odsr
 
-.. image:: https://badge.fury.io/py/.svg
-   :target: https://pypi.org/project/
+.. image:: https://badge.fury.io/py/pyexcel-odsr.svg
+   :target: https://pypi.org/project/pyexcel-odsr
 
 
-.. image:: https://pepy.tech/badge//month
-   :target: https://pepy.tech/project//month
+.. image:: https://pepy.tech/badge/pyexcel-odsr/month
+   :target: https://pepy.tech/project/pyexcel-odsr/month
 
 
 .. image:: https://img.shields.io/gitter/room/gitterHQ/gitter.svg
@@ -61,19 +61,19 @@ Installation
 ================================================================================
 
 
-You can install  via pip:
+You can install pyexcel-odsr via pip:
 
 .. code-block:: bash
 
-    $ pip install 
+    $ pip install pyexcel-odsr
 
 
 or clone it and install it:
 
 .. code-block:: bash
 
-    $ git clone https://github.com//.git
-    $ cd 
+    $ git clone https://github.com/pyexcel/pyexcel-odsr.git
+    $ cd pyexcel-odsr
     $ python setup.py install
 
 Usage
@@ -105,18 +105,18 @@ As a standalone library
     >>> data = OrderedDict() # from collections import OrderedDict
     >>> data.update({"Sheet 1": [[1, 2, 3], [4, 5, 6]]})
     >>> data.update({"Sheet 2": [["row 1", "row 2", "row 3"]]})
-    >>> save_data("your_file.", data)
+    >>> save_data("your_file.ods", data)
 
 
-Read from an  file
+Read from an ods file
 ********************************************************************************
 
 Here's the sample code:
 
 .. code-block:: python
 
-    >>> from pyexcel_ import get_data
-    >>> data = get_data("your_file.")
+    >>> from pyexcel_odsr import get_data
+    >>> data = get_data("your_file.ods")
     >>> import json
     >>> print(json.dumps(data))
     {"Sheet 1": [[1, 2, 3], [4, 5, 6]], "Sheet 2": [["row 1", "row 2", "row 3"]]}
@@ -139,7 +139,7 @@ Here's the sample code:
 
 
 
-Read from an  from memory
+Read from an ods from memory
 ********************************************************************************
 
 Continue from previous example:
@@ -147,8 +147,8 @@ Continue from previous example:
 .. code-block:: python
 
     >>> # This is just an illustration
-    >>> # In reality, you might deal with  file upload
-    >>> # where you will read from requests.FILES['YOUR__FILE']
+    >>> # In reality, you might deal with ods file upload
+    >>> # where you will read from requests.FILES['YOUR_ODS_FILE']
     >>> data = get_data(io)
     >>> print(json.dumps(data))
     {"Sheet 1": [[1, 2, 3], [4, 5, 6]], "Sheet 2": [[7, 8, 9], [10, 11, 12]]}
@@ -159,7 +159,7 @@ Pagination feature
 
 
 
-Let's assume the following file is a huge  file:
+Let's assume the following file is a huge ods file:
 
 .. code-block:: python
 
@@ -174,13 +174,13 @@ Let's assume the following file is a huge  file:
    >>> sheetx = {
    ...     "huge": huge_data
    ... }
-   >>> save_data("huge_file.", sheetx)
+   >>> save_data("huge_file.ods", sheetx)
 
 And let's pretend to read partial data:
 
 .. code-block:: python
 
-   >>> partial_data = get_data("huge_file.", start_row=2, row_limit=3)
+   >>> partial_data = get_data("huge_file.ods", start_row=2, row_limit=3)
    >>> print(json.dumps(partial_data))
    {"huge": [[3, 23, 33], [4, 24, 34], [5, 25, 35]]}
 
@@ -188,7 +188,7 @@ And you could as well do the same for columns:
 
 .. code-block:: python
 
-   >>> partial_data = get_data("huge_file.", start_column=1, column_limit=2)
+   >>> partial_data = get_data("huge_file.ods", start_column=1, column_limit=2)
    >>> print(json.dumps(partial_data))
    {"huge": [[21, 31], [22, 32], [23, 33], [24, 34], [25, 35], [26, 36]]}
 
@@ -196,7 +196,7 @@ Obvious, you could do both at the same time:
 
 .. code-block:: python
 
-   >>> partial_data = get_data("huge_file.",
+   >>> partial_data = get_data("huge_file.ods",
    ...     start_row=2, row_limit=3,
    ...     start_column=1, column_limit=2)
    >>> print(json.dumps(partial_data))
@@ -205,18 +205,18 @@ Obvious, you could do both at the same time:
 .. testcode::
    :hide:
 
-   >>> os.unlink("huge_file.")
+   >>> os.unlink("huge_file.ods")
 
 
 As a pyexcel plugin
 --------------------------------------------------------------------------------
 
 No longer, explicit import is needed since pyexcel version 0.2.2. Instead,
-this library is auto-loaded. So if you want to read data in  format,
+this library is auto-loaded. So if you want to read data in ods format,
 installing it is enough.
 
 
-Reading from an  file
+Reading from an ods file
 ********************************************************************************
 
 Here is the sample code:
@@ -224,7 +224,7 @@ Here is the sample code:
 .. code-block:: python
 
     >>> import pyexcel as pe
-    >>> sheet = pe.get_book(file_name="your_file.")
+    >>> sheet = pe.get_book(file_name="your_file.ods")
     >>> sheet
     Sheet 1:
     +---+---+---+
@@ -242,24 +242,24 @@ Here is the sample code:
 .. testcode::
    :hide:
 
-    >>> sheet.save_as("another_file.")
+    >>> sheet.save_as("another_file.ods")
 
 
 
 Reading from a IO instance
 ********************************************************************************
 
-You got to wrap the binary content with stream to get  working:
+You got to wrap the binary content with stream to get ods working:
 
 .. code-block:: python
 
     >>> # This is just an illustration
-    >>> # In reality, you might deal with  file upload
-    >>> # where you will read from requests.FILES['YOUR__FILE']
-    >>> file = "another_file."
-    >>> with open(file, "rb") as f:
+    >>> # In reality, you might deal with ods file upload
+    >>> # where you will read from requests.FILES['YOUR_ODS_FILE']
+    >>> odsfile = "another_file.ods"
+    >>> with open(odsfile, "rb") as f:
     ...     content = f.read()
-    ...     r = pe.get_book(file_type="", file_content=content)
+    ...     r = pe.get_book(file_type="ods", file_content=content)
     ...     print(r)
     ...
     Sheet 1:
@@ -279,15 +279,15 @@ You got to wrap the binary content with stream to get  working:
 License
 ================================================================================
 
- License
+New BSD License
 
 Developer guide
 ==================
 
 Development steps for code changes
 
-#. git clone https://github.com/pyexcel/.git
-#. cd 
+#. git clone https://github.com/pyexcel/pyexcel-odsr.git
+#. cd pyexcel-odsr
 
 Upgrade your setup tools and pip. They are needed for development and testing only:
 
@@ -344,5 +344,5 @@ This library is based on the ods of messytables, Open Knowledge Foundation Ltd.
    :hide:
 
    >>> import os
-   >>> os.unlink("your_file.")
-   >>> os.unlink("another_file.")
+   >>> os.unlink("your_file.ods")
+   >>> os.unlink("another_file.ods")
