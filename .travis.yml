@@ -5,11 +5,8 @@ notifications:
   email: false
 python:
   - 3.6
-  - 3.5
-  - 3.4
-  - 3.3
-  - 2.7
-  - 2.6
+  - 3.7
+  - 3.8
 
 stages:
   - lint
@@ -31,7 +28,7 @@ stages:
   env:
     - MINREQ=0
   stage: moban
-  install: pip install moban>=0.0.4 gitfs2 pypifs
+  install: pip install moban gitfs2 pypifs moban-jinja2-github moban-ansible
   script:
     - moban
     - git diff --exit-code
