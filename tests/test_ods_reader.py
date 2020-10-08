@@ -2,6 +2,8 @@ import os
 
 from base import ODSCellTypes
 from pyexcel._compact import BytesIO
+from pyexcel_io.reader import Reader
+from pyexcel_io.writer import Writer
 from pyexcel_ods.odsw import ODSWriter
 
 from pyexcel_odsr.odsr import ODSBook
@@ -9,9 +11,9 @@ from pyexcel_odsr.odsr import ODSBook
 
 class TestODSReader(ODSCellTypes):
     def setUp(self):
-        r = ODSBook(
-            os.path.join("tests", "fixtures", "ods_formats.ods"), "ods"
-        )
+        r = Reader("fods")
+        r.reader_class = ODSBook
+        r.open(os.path.join("tests", "fixtures", "ods_formats.ods"))
         self.data = r.read_all()
         for key in self.data.keys():
             self.data[key] = list(self.data[key])
@@ -23,7 +25,9 @@ class TestODSReaderStream(ODSCellTypes):
         with open(
             os.path.join("tests", "fixtures", "ods_formats.ods"), "rb"
         ) as f:
-            r = ODSBook(f, "ods")
+            r = Reader("fods")
+            r.reader_class = ODSBook
+            r.open_stream(f)
             self.data = r.read_all()
             for key in self.data.keys():
                 self.data[key] = list(self.data[key])
@@ -36,7 +40,9 @@ class TestODSReaderBytesIO(ODSCellTypes):
             os.path.join("tests", "fixtures", "ods_formats.ods"), "rb"
         ) as f:
             io = BytesIO(f.read())
-            r = ODSBook(io, "ods")
+            r = Reader("fods")
+            r.reader_class = ODSBook
+            r.open_stream(io)
             self.data = r.read_all()
             for key in self.data.keys():
                 self.data[key] = list(self.data[key])
@@ -45,18 +51,22 @@ class TestODSReaderBytesIO(ODSCellTypes):
 
 class TestODSWriter(ODSCellTypes):
     def setUp(self):
-        r = ODSBook(
-            os.path.join("tests", "fixtures", "ods_formats.ods"), "ods"
-        )
+        r = Reader("fods")
+        r.reader_class = ODSBook
+        r.open(os.path.join("tests", "fixtures", "ods_formats.ods"))
         self.data1 = r.read_all()
+        r.close()
         self.testfile = "odswriter.ods"
-        w = ODSWriter(self.testfile, "ods")
+        w = Writer("ods")
+        w.writer_class = ODSWriter
+        w.open(self.testfile)
         w.write(self.data1)
         w.close()
-        r2 = ODSBook(self.testfile, "ods")
-        self.data = r2.read_all()
+        r.open(self.testfile)
+        self.data = r.read_all()
         for key in self.data.keys():
             self.data[key] = list(self.data[key])
+        r.close()
 
     def tearDown(self):
         if os.path.exists(self.testfile):

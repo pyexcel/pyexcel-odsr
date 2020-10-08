@@ -1,15 +1,16 @@
 import os
 
 from base import ODSCellTypes
+from pyexcel_io.reader import Reader
 
 from pyexcel_odsr.odsr import FODSBook
 
 
 class TestFODSReader(ODSCellTypes):
     def setUp(self):
-        r = FODSBook(
-            os.path.join("tests", "fixtures", "ods_formats.fods"), "fods"
-        )
+        r = Reader("fods")
+        r.reader_class = FODSBook
+        r.open(os.path.join("tests", "fixtures", "ods_formats.fods"))
         self.data = r.read_all()
         for key in self.data.keys():
             self.data[key] = list(self.data[key])
@@ -21,7 +22,9 @@ class TestFODSReaderStream(ODSCellTypes):
         with open(
             os.path.join("tests", "fixtures", "ods_formats.fods"), "rb"
         ) as f:
-            r = FODSBook(f, "fods")
+            r = Reader("fods")
+            r.reader_class = FODSBook
+            r.open_stream(f)
             self.data = r.read_all()
             for key in self.data.keys():
                 self.data[key] = list(self.data[key])

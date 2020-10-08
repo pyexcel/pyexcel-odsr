@@ -11,5 +11,5 @@ moban
 moban_jinja2_github
 pyexcel
 psutil
-pyexcel-ods
-pyexcel-xls
+pyexcel-ods>=0.6.0
+pyexcel-xls>=0.6.0
