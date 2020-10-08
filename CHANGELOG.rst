@@ -6,7 +6,7 @@ Change log
 
 **Updated**
 
-#. New style xlsx plugins, promoted by pyexcel-io v0.6.0.
+#. New style xlsx plugins, promoted by pyexcel-io v0.6.2.
 
 0.5.2 - 23.10.2017
 --------------------------------------------------------------------------------

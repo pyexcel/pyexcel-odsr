@@ -17,3 +17,5 @@ keywords:
   - excel
   - ods
 description: a plugin to pyexcel and provides the capbility to read data in ods formats using tailored messytables.
+python_requires: ">=3.6"
+min_python_version: "3.6"

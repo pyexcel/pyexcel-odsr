@@ -49,11 +49,11 @@ CLASSIFIERS = [
     "Topic :: Software Development :: Libraries",
     "Programming Language :: Python",
     "Intended Audience :: Developers",
-    "Programming Language :: Python :: 2.6",
-    "Programming Language :: Python :: 2.7",
-    "Programming Language :: Python :: 3.3",
-    "Programming Language :: Python :: 3.4",
-    "Programming Language :: Python :: 3.5",
+
+    "Programming Language :: Python :: 3 :: Only",
+
+
+
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
@@ -61,6 +61,7 @@ CLASSIFIERS = [
     'License :: OSI Approved :: BSD License',
 ]
 
+PYTHON_REQUIRES = ">=3.6"
 
 INSTALL_REQUIRES = [
     "pyexcel-io>=0.6.2",
@@ -194,6 +195,7 @@ if __name__ == "__main__":
         long_description=read_files(*FILES),
         license=LICENSE,
         keywords=KEYWORDS,
+        python_requires=PYTHON_REQUIRES,
         extras_require=EXTRAS_REQUIRE,
         tests_require=["nose"],
         install_requires=INSTALL_REQUIRES,
