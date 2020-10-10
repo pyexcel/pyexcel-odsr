@@ -29,7 +29,7 @@ except (ValueError, UnicodeError, locale.Error):
 
 NAME = "pyexcel-odsr"
 AUTHOR = "chfw"
-VERSION = "0.5.2"
+VERSION = "0.6.0"
 EMAIL = "info@pyexcel.org"
 LICENSE = "New BSD"
 DESCRIPTION = (
@@ -37,7 +37,7 @@ DESCRIPTION = (
     "formats using tailored messytables."
 )
 URL = "https://github.com/pyexcel/pyexcel-odsr"
-DOWNLOAD_URL = "%s/archive/0.5.2.tar.gz" % URL
+DOWNLOAD_URL = "%s/archive/0.6.0.tar.gz" % URL
 FILES = ["README.rst", 'CONTRIBUTORS.rst', "CHANGELOG.rst"]
 KEYWORDS = [
     "python",
@@ -49,11 +49,11 @@ CLASSIFIERS = [
     "Topic :: Software Development :: Libraries",
     "Programming Language :: Python",
     "Intended Audience :: Developers",
-    "Programming Language :: Python :: 2.6",
-    "Programming Language :: Python :: 2.7",
-    "Programming Language :: Python :: 3.3",
-    "Programming Language :: Python :: 3.4",
-    "Programming Language :: Python :: 3.5",
+
+    "Programming Language :: Python :: 3 :: Only",
+
+
+
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
@@ -61,9 +61,10 @@ CLASSIFIERS = [
     'License :: OSI Approved :: BSD License',
 ]
 
+PYTHON_REQUIRES = ">=3.6"
 
 INSTALL_REQUIRES = [
-    "pyexcel-io>=0.5.3",
+    "pyexcel-io>=0.6.2",
     "lxml>=3.2",
 ]
 SETUP_COMMANDS = {}
@@ -73,8 +74,8 @@ EXTRAS_REQUIRE = {
 }
 # You do not need to read beyond this line
 PUBLISH_COMMAND = "{0} setup.py sdist bdist_wheel upload -r pypi".format(sys.executable)
-GS_COMMAND = ("gs pyexcel-odsr v0.5.2 " +
-              "Find 0.5.2 in changelog for more details")
+GS_COMMAND = ("gs pyexcel-odsr v0.6.0 " +
+              "Find 0.6.0 in changelog for more details")
 NO_GS_MESSAGE = ("Automatic github release is disabled. " +
                  "Please install gease to enable it.")
 UPLOAD_FAILED_MSG = (
@@ -194,6 +195,7 @@ if __name__ == "__main__":
         long_description=read_files(*FILES),
         license=LICENSE,
         keywords=KEYWORDS,
+        python_requires=PYTHON_REQUIRES,
         extras_require=EXTRAS_REQUIRE,
         tests_require=["nose"],
         install_requires=INSTALL_REQUIRES,

@@ -9,3 +9,7 @@ collective.checkdocs
 pygments
 moban
 moban_jinja2_github
+pyexcel
+psutil
+pyexcel-ods>=0.6.0
+pyexcel-xls>=0.6.0

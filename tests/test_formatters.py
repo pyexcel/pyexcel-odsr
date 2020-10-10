@@ -1,6 +1,6 @@
 import os
-from unittest import TestCase
 from textwrap import dedent
+from unittest import TestCase
 
 import pyexcel as pe
 
@@ -13,38 +13,46 @@ class TestAutoDetectInt(TestCase):
 
     def test_auto_detect_int(self):
         sheet = pe.get_sheet(file_name=self.test_file)
-        expected = dedent("""
+        expected = dedent(
+            """
         pyexcel_sheet1:
         +---+---+-----+
         | 1 | 2 | 3.1 |
-        +---+---+-----+""").strip()
+        +---+---+-----+"""
+        ).strip()
         self.assertEqual(str(sheet), expected)
 
     def test_get_book_auto_detect_int(self):
         book = pe.get_book(file_name=self.test_file)
-        expected = dedent("""
+        expected = dedent(
+            """
         pyexcel_sheet1:
         +---+---+-----+
         | 1 | 2 | 3.1 |
-        +---+---+-----+""").strip()
+        +---+---+-----+"""
+        ).strip()
         self.assertEqual(str(book), expected)
 
     def test_auto_detect_int_false(self):
         sheet = pe.get_sheet(file_name=self.test_file, auto_detect_int=False)
-        expected = dedent("""
+        expected = dedent(
+            """
         pyexcel_sheet1:
         +-----+-----+-----+
         | 1.0 | 2.0 | 3.1 |
-        +-----+-----+-----+""").strip()
+        +-----+-----+-----+"""
+        ).strip()
         self.assertEqual(str(sheet), expected)
 
     def test_get_book_auto_detect_int_false(self):
         book = pe.get_book(file_name=self.test_file, auto_detect_int=False)
-        expected = dedent("""
+        expected = dedent(
+            """
         pyexcel_sheet1:
         +-----+-----+-----+
         | 1.0 | 2.0 | 3.1 |
-        +-----+-----+-----+""").strip()
+        +-----+-----+-----+"""
+        ).strip()
         self.assertEqual(str(book), expected)
 
     def tearDown(self):

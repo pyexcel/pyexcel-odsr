@@ -1,0 +1,81 @@
+name: pyexcel-odsr
+organisation: pyexcel
+releases:
+- changes:
+  - action: Updated
+    details:
+    - 'New style xlsx plugins, promoted by pyexcel-io v0.6.2.'
+  date: 10.10.2020
+  version: 0.6.0
+- changes:
+  - action: updated
+    details:
+    - "`pyexcel#105`, remove gease  from setup_requires, introduced by 0.5.1."
+    - remove python2.6 test support
+    - update its dependecy on pyexcel-io to 0.5.3
+  date: 23.10.2017
+  version: 0.5.2
+- changes:
+  - action: added
+    details:
+    - '`pyexcel#103`, include LICENSE file  in MANIFEST.in, meaning LICENSE file will
+      appear in the released tar ball.'
+  date: 20.10.2017
+  version: 0.5.1
+- changes:
+  - action: Updated
+    details:
+    - put dependency on pyexcel-io 0.5.0, which uses cStringIO instead of StringIO.  Hence,
+      there will be performance boost in handling files in memory.
+  - action: Relocated
+    details:
+    - All ods type conversion code lives in pyexcel_io.service module
+    - '`#4`, handle unseekable  stream given by http response.'
+  date: 30.08.2017
+  version: 0.5.0
+- changes:
+  - action: Relocated
+    details:
+    - All ods type conversion code lives in pyexcel_io.service module
+    - '`#4`, handle unseekable  stream given by http response.'
+  date: 25.08.2017
+  version: 0.4.3
+- changes: []
+  date: 20.08.2017
+  version: 0.4.2
+- changes:
+  - action: Updated
+    details:
+    - PR `PR#3`, support fods, flat  ods file
+  date: 26.07.2017
+  version: 0.4.1
+- changes:
+  - action: Updated
+    details:
+    - Updated to use lml interface
+  date: 19.06.2017
+  version: 0.4.0
+- changes:
+  - action: Updated
+    details:
+    - issue `#2`, not all texts  in a multi-node cell were extracted.
+  date: 07.05.2017
+  version: 0.3.2
+- changes:
+  - action: Updated
+    details:
+    - issue `#1`, PT288H00M00S  is valid duration
+    - initial release. It has all functionalities of pyexcel-ods and pyexcel-ods3.  Specially,
+      it supports partial reading of the ods file. When dealing with  big data file,
+      this capability enables pagination feature to indeed read  partial files.
+  date: 13.04.2017
+  version: 0.3.1
+- changes:
+  - action: Updated
+    details:
+    - issue `#1`, PT288H00M00S  is valid duration
+    - initial release. It has all functionalities of pyexcel-ods and pyexcel-ods3.  Specially,
+      it supports partial reading of the ods file. When dealing with  big data file,
+      this capability enables pagination feature to indeed read  partial files.
+  date: 02.02.2017
+  version: 0.3.0
