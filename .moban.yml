@@ -3,7 +3,6 @@ configuration:
   configuration: pyexcel-odsr.yml
 targets:
   - README.rst: custom_readme.rst.jj2
-  - .travis.yml: custom_travis.yml.jj2
   - "tests/requirements.txt": "tests/custom_req.txt.jj2"
   - "tests/base.py": "tests/base.py"
   - "pyexcel_odsr/_version.py": "version.py.jj2"
