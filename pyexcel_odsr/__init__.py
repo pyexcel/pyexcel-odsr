@@ -21,8 +21,9 @@ IOPluginInfoChainV2(__name__).add_a_reader(
     stream_type="binary",
 ).add_a_reader(
     relative_plugin_class_path="odsr.FODSBook",
+    locations=["file", "memory"],
     file_types=[__FILE_TYPE_FODS__],
-    stream_type="binary",
+    stream_type="text",
 ).add_a_reader(
     relative_plugin_class_path="odsr.ODSBookInContent",
     file_types=[__FILE_TYPE__],
