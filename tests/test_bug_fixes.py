@@ -4,8 +4,7 @@ import os
 
 import psutil
 import pyexcel as pe
-from nose import SkipTest
-from nose.tools import eq_, raises
+import pytest
 
 from pyexcel_odsr import get_data
 
@@ -14,7 +13,7 @@ IN_TRAVIS = "TRAVIS" in os.environ
 
 def test_bug_fix_for_issue_1():
     data = get_data(get_fixtures("repeated.ods"), library="pyexcel-odsr")
-    eq_(data["Sheet1"], [["repeated", "repeated", "repeated", "repeated"]])
+    assert data["Sheet1"] == [["repeated", "repeated", "repeated", "repeated"]]
 
 
 def test_issue_14():
@@ -23,7 +22,7 @@ def test_issue_14():
     data = get_data(
         get_fixtures(test_file), skip_empty_rows=True, library="pyexcel-odsr"
     )
-    eq_(data["S-LMC"], [[u"aaa"], [0]])
+    assert data["S-LMC"] == [["aaa"], [0]]
 
 
 def test_issue_1():
@@ -31,7 +30,7 @@ def test_issue_1():
     data = get_data(
         get_fixtures(test_file), skip_empty_rows=True, library="pyexcel-odsr"
     )
-    eq_(data["Sheet1"][0][0].days, 12)
+    assert data["Sheet1"][0][0].days == 12
 
 
 def test_issue_2():
@@ -39,7 +38,7 @@ def test_issue_2():
     data = get_data(
         get_fixtures(test_file), skip_empty_rows=True, library="pyexcel-odsr"
     )
-    eq_(data["product.template"][1][1], "PRODUCT NAME PMP")
+    assert data["product.template"][1][1] == "PRODUCT NAME PMP"
 
 
 def test_issue_83_ods_file_handle():
@@ -68,12 +67,12 @@ def test_issue_83_ods_file_handle():
     pe.free_resources()
     open_files_l4 = proc.open_files()
     # this confirms that no more open file handle
-    eq_(open_files_l1, open_files_l4)
+    assert open_files_l1 == open_files_l4
 
 
 def test_issue_23():
     if not IN_TRAVIS:
-        raise SkipTest()
+        pytest.skip()
     pe.get_book(
         url="https://github.com/pyexcel/pyexcel-ods/raw/master/tests/fixtures/white_space.ods",
         library="pyexcel-odsr",

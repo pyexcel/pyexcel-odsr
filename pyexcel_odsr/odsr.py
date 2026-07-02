@@ -1,11 +1,12 @@
 """
-    pyexcel_odsr.odsr
-    ~~~~~~~~~~~~~~~~~~~
-    The lower level ods file format handler using messytables
+pyexcel_odsr.odsr
+~~~~~~~~~~~~~~~~~~~
+The lower level ods file format handler using messytables
 
-    :copyright: (c) 2015-2020 by Onni Software Ltd & its contributors
-    :license: New BSD License
+:copyright: (c) 2015-2020 by Onni Software Ltd & its contributors
+:license: New BSD License
 """
+
 from io import BytesIO
 
 import pyexcel_io.service as service

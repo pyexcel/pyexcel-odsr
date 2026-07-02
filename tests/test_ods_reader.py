@@ -10,7 +10,7 @@ from pyexcel_odsr.odsr import ODSBook
 
 
 class TestODSReader(ODSCellTypes):
-    def setUp(self):
+    def setup_method(self):
         r = Reader("fods")
         r.reader_class = ODSBook
         r.open(os.path.join("tests", "fixtures", "ods_formats.ods"))
@@ -21,7 +21,7 @@ class TestODSReader(ODSCellTypes):
 
 
 class TestODSReaderStream(ODSCellTypes):
-    def setUp(self):
+    def setup_method(self):
         with open(
             os.path.join("tests", "fixtures", "ods_formats.ods"), "rb"
         ) as f:
@@ -35,7 +35,7 @@ class TestODSReaderStream(ODSCellTypes):
 
 
 class TestODSReaderBytesIO(ODSCellTypes):
-    def setUp(self):
+    def setup_method(self):
         with open(
             os.path.join("tests", "fixtures", "ods_formats.ods"), "rb"
         ) as f:
@@ -50,7 +50,7 @@ class TestODSReaderBytesIO(ODSCellTypes):
 
 
 class TestODSWriter(ODSCellTypes):
-    def setUp(self):
+    def setup_method(self):
         r = Reader("fods")
         r.reader_class = ODSBook
         r.open(os.path.join("tests", "fixtures", "ods_formats.ods"))
@@ -68,6 +68,6 @@ class TestODSWriter(ODSCellTypes):
             self.data[key] = list(self.data[key])
         r.close()
 
-    def tearDown(self):
+    def teardown_method(self):
         if os.path.exists(self.testfile):
             os.unlink(self.testfile)

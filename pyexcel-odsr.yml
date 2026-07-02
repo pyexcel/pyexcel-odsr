@@ -9,10 +9,12 @@ dependencies:
   - pyexcel-io>=0.6.2
   - lxml>=3.2
 test_dependencies:
+  - pytest
   - pyexcel
   - psutil
   - pyexcel-ods>=0.6.0
   - pyexcel-xls>=0.6.0
+use_pytest: true
 keywords:
   - excel
   - ods

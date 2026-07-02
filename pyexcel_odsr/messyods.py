@@ -19,6 +19,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
+
 import io
 import re
 import sys
@@ -49,8 +50,8 @@ FODS_ROW_MATCH = re.compile(
     rb".*?(<table:table-row.*?<\/.*?:table-row>).*?", re.DOTALL
 )
 FODS_DOCUMENT_CLOSE_TAG = b"</office:document>"
-NS_OPENDOCUMENT_PTTN = u"urn:oasis:names:tc:opendocument:xmlns:%s"
-NS_CAL_PTTN = u"urn:org:documentfoundation:names:experimental:calc:xmlns:%s"
+NS_OPENDOCUMENT_PTTN = "urn:oasis:names:tc:opendocument:xmlns:%s"
+NS_CAL_PTTN = "urn:org:documentfoundation:names:experimental:calc:xmlns:%s"
 NS_OPENDOCUMENT_TABLE = NS_OPENDOCUMENT_PTTN % "table:1.0"
 NS_OPENDOCUMENT_OFFICE = NS_OPENDOCUMENT_PTTN % "office:1.0"
 
@@ -59,14 +60,14 @@ VALUE_TYPE = "value-type"
 COLUMN_REPEAT = "number-columns-repeated"
 
 DEFAULT_NAMESPACES = {
-    "dc": u"http://purl.org/dc/elements/1.1/",
-    "draw": NS_OPENDOCUMENT_PTTN % u"drawing:1.0",
-    "number": NS_OPENDOCUMENT_PTTN % u"datastyle:1.0",
-    "office": NS_OPENDOCUMENT_PTTN % u"office:1.0",
-    "svg": NS_OPENDOCUMENT_PTTN % u"svg-compatible:1.0",
-    "table": NS_OPENDOCUMENT_PTTN % u"table:1.0",
-    "text": NS_OPENDOCUMENT_PTTN % u"text:1.0",
-    "calcext": NS_CAL_PTTN % u"calcext:1.0",
+    "dc": "http://purl.org/dc/elements/1.1/",
+    "draw": NS_OPENDOCUMENT_PTTN % "drawing:1.0",
+    "number": NS_OPENDOCUMENT_PTTN % "datastyle:1.0",
+    "office": NS_OPENDOCUMENT_PTTN % "office:1.0",
+    "svg": NS_OPENDOCUMENT_PTTN % "svg-compatible:1.0",
+    "table": NS_OPENDOCUMENT_PTTN % "table:1.0",
+    "text": NS_OPENDOCUMENT_PTTN % "text:1.0",
+    "calcext": NS_CAL_PTTN % "calcext:1.0",
 }
 
 
@@ -161,19 +162,19 @@ class ODSRowSet(object):
         else:
             namespaces = DEFAULT_NAMESPACES
 
-            ods_header = u"<wrapper {0}>".format(
+            ods_header = "<wrapper {0}>".format(
                 " ".join(
                     'xmlns:{0}="{1}"'.format(k, v)
                     for k, v in namespaces.iteritems()
                 )
             ).encode("utf-8")
-            ods_footer = u"</wrapper>".encode("utf-8")
+            ods_footer = "</wrapper>".encode("utf-8")
             self.namespace_tags = (ods_header, ods_footer)
 
         self._row_matcher = ODS_ROW_MATCH
 
     def raw(self, sample=False):
-        """ Iterate over all rows in this sheet. """
+        """Iterate over all rows in this sheet."""
         rows = self._row_matcher.findall(self.sheet)
 
         for row in rows:

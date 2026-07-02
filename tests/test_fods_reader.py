@@ -7,7 +7,7 @@ from pyexcel_odsr.odsr import FODSBook
 
 
 class TestFODSReader(ODSCellTypes):
-    def setUp(self):
+    def setup_method(self):
         r = Reader("fods")
         r.reader_class = FODSBook
         r.open(os.path.join("tests", "fixtures", "ods_formats.fods"))
@@ -18,7 +18,7 @@ class TestFODSReader(ODSCellTypes):
 
 
 class TestFODSReaderStream(ODSCellTypes):
-    def setUp(self):
+    def setup_method(self):
         with open(
             os.path.join("tests", "fixtures", "ods_formats.fods"), "rb"
         ) as f:
